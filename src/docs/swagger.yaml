@@ -1,0 +1,456 @@
+openapi: 3.0.0
+info:
+  title: Functional Roles Authorization API
+  description: API for managing Functional Roles, Task Roles, Domains, and Entity Types with full CRUD and relationship support.
+  version: 1.0.0
+servers:
+  - url: http://localhost:5000/api
+    description: Local development server
+
+paths:
+  ############################
+  # Functional Role Endpoints
+  ############################
+  /functionalRoles:
+    get:
+      summary: Get all Functional Roles
+      tags:
+        - Functional Roles
+      responses:
+        '200':
+          description: List of Functional Roles
+
+    post:
+      summary: Create a Functional Role
+      tags:
+        - Functional Roles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFunctionalRole"
+      responses:
+        '201':
+          description: Functional Role created
+
+  /functionalRoles/{id}:
+    get:
+      summary: Get a Functional Role
+      tags:
+        - Functional Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Functional Role details
+
+    put:
+      summary: Update a Functional Role
+      tags:
+        - Functional Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFunctionalRole"
+      responses:
+        '200':
+          description: Functional Role updated
+
+    delete:
+      summary: Delete a Functional Role
+      tags:
+        - Functional Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Functional Role deleted
+
+  /functionalRoles/{id}/taskRoles:
+    post:
+      summary: Assign Task Roles to Functional Role
+      tags:
+        - Functional Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taskRoleIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Task Roles assigned successfully
+
+    get:
+      summary: Get Task Roles for a Functional Role
+      tags:
+        - Functional Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of Task Roles for the Functional Role
+
+
+  ############################
+  # Task Role Endpoints
+  ############################
+  /taskRoles:
+    get:
+      summary: Get all Task Roles
+      tags:
+        - Task Roles
+      responses:
+        '200':
+          description: List of Task Roles
+
+    post:
+      summary: Create a Task Role
+      tags:
+        - Task Roles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskRole"
+      responses:
+        '201':
+          description: Task Role created
+
+  /taskRoles/{id}:
+    get:
+      summary: Get a Task Role
+      tags:
+        - Task Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task Role details
+
+    put:
+      summary: Update a Task Role
+      tags:
+        - Task Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskRole"
+      responses:
+        '200':
+          description: Task Role updated
+
+    delete:
+      summary: Delete a Task Role
+      tags:
+        - Task Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Task Role deleted
+
+
+  ############################
+  # Domain Endpoints
+  ############################
+  /domains:
+    get:
+      summary: Get all Domains
+      tags:
+        - Domains
+      responses:
+        '200':
+          description: List of Domains
+
+    post:
+      summary: Create a Domain
+      tags:
+        - Domains
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDomain"
+      responses:
+        '201':
+          description: Domain created
+
+  /domains/{id}:
+    get:
+      summary: Get a Domain
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Domain details
+
+    put:
+      summary: Update a Domain
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateDomain"
+      responses:
+        '200':
+          description: Domain updated
+
+    delete:
+      summary: Delete a Domain
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Domain deleted
+
+  /domains/{id}/entityTypes:
+    post:
+      summary: Assign Entity Types to a Domain
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entityTypeIds:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Entity Types assigned successfully
+
+    get:
+      summary: Get Entity Types for a Domain
+      tags:
+        - Domains
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of Entity Types for the Domain
+  ############################
+  # Entity Type Endpoints
+  ############################
+  /entityTypes:
+    get:
+      summary: Get all Entity Types
+      tags:
+        - Entity Types
+      responses:
+        '200':
+          description: List of Entity Types
+
+    post:
+      summary: Create an Entity Type
+      tags:
+        - Entity Types
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEntityType"
+      responses:
+        '201':
+          description: Entity Type created
+
+  /entityTypes/{id}:
+    get:
+      summary: Get an Entity Type
+      tags:
+        - Entity Types
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Entity Type details
+
+    put:
+      summary: Update an Entity Type
+      tags:
+        - Entity Types
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEntityType"
+      responses:
+        '200':
+          description: Entity Type updated
+
+    delete:
+      summary: Delete an Entity Type
+      tags:
+        - Entity Types
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Entity Type deleted
+
+components:
+  schemas:
+    FunctionalRole:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    CreateFunctionalRole:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+    TaskRole:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    CreateTaskRole:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+    Domain:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    CreateDomain:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+
+    EntityType:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+
+    CreateEntityType:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
