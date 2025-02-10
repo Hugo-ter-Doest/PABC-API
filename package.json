@@ -1,9 +1,12 @@
 {
   "name": "PABC-API",
   "version": "0.1.0",
+  "description": "PodiumD Authorization API",
   "main": "./src/server.js",
+  "author": "Hugo ter Doest",
+  "license": "EUPL-1.2",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node ./src/server.js",
+    "start": "cross-env NODE_ENV=development nodemon",
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:watch": "cross-env NODE_ENV=test jest --watch"
   },

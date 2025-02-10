@@ -68,7 +68,7 @@ exports.getFunctionalRolesByTaskRole = async (req, res) => {
 
     if (!taskRole) return res.status(404).json({ error: "Task Role not found" });
 
-    res.json({ taskRoleId, name: taskRole.name, functionalRoles: taskRole.FunctionalRoles });
+    res.json({ taskRoleId, functionalRoles: taskRole.FunctionalRoles });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

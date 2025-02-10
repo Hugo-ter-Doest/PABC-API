@@ -91,7 +91,7 @@ exports.getEntityTypesByDomain = async (req, res) => {
 
     if (!domain) return res.status(404).json({ error: "Domain not found" });
 
-    res.json({ domainId, name: domain.name, entityTypes: domain.EntityTypes });
+    res.json({ domainId, entityTypes: domain.EntityTypes });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

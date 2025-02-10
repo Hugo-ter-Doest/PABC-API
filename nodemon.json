@@ -1,0 +1,8 @@
+{
+    "watch": ["**/*.js", "**/*.json", "**/*.yaml", "**/*.yml", "./src/docs/swagger.yaml"],
+    "exec": "node ./src/server.js",
+    "ignore": ["node_modules/"],
+    "env": {
+      "NODE_ENV": "development"
+    }
+  }

@@ -30,7 +30,7 @@ exports.getFunctionalRolesDetails = async (req, res) => {
         }
 
         return {
-          functionalRole: { id: functionalRole.id, name: functionalRole.name },
+          functionalRoleId: functionalRole.id,
           taskRoles: functionalRole.TaskRoles,
           accessibleEntityTypes
         };
@@ -175,7 +175,7 @@ exports.getTaskRolesByFunctionalRole = async (req, res) => {
 
     if (!functionalRole) return res.status(404).json({ error: "Functional Role not found" });
 
-    res.json({ functionalRoleId, name: functionalRole.name, taskRoles: functionalRole.TaskRoles });
+    res.json({ functionalRoleId, taskRoles: functionalRole.TaskRoles });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

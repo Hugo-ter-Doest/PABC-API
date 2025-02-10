@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Functional Roles Authorization API
+  title: PodiumD Authorization API
   description: API for managing Functional Roles, Task Roles, Domains, and Entity Types with full CRUD and relationship support.
   version: 1.0.0
 servers:
@@ -19,6 +19,11 @@ paths:
       responses:
         '200':
           description: List of Functional Roles
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FunctionalRole'
 
     post:
       summary: Create a Functional Role
@@ -36,7 +41,7 @@ paths:
 
   /functionalRoles/{id}:
     get:
-      summary: Get a Functional Role
+      summary: Get a Functional Role by Id
       tags:
         - Functional Roles
       parameters:
@@ -48,6 +53,10 @@ paths:
       responses:
         '200':
           description: Functional Role details
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/FunctionalRole'
 
     put:
       summary: Update a Functional Role
@@ -110,7 +119,7 @@ paths:
           description: Task Roles assigned successfully
 
     get:
-      summary: Get Task Roles for a Functional Role
+      summary: Get Task Roles assigned to a Functional Role
       tags:
         - Functional Roles
       parameters:
@@ -127,13 +136,13 @@ paths:
               schema:
                 type: object
                 properties:
-                   functionalRolId:
+                  functionalRoleId:
                     type: string
-                    description: The ID of the domain
-                   taskRoles:
+                    description: Functional Role identifier
+                  taskRoles:
                     type: array
                     items: 
-                      $ref: '#/components/schemas/DomTaskRole'
+                      $ref: '#/components/schemas/TaskRole'
 
   /functionalRoles/details:
     post:
@@ -163,8 +172,9 @@ paths:
                 items:
                   type: object
                   properties:
-                    functionalRole:
-                      $ref: "#/components/schemas/FunctionalRole"
+                    functionalRoleId:
+                      type: string,
+                      description: Functional Role identifier
                     taskRoles:
                       type: array
                       items:
@@ -189,6 +199,12 @@ paths:
       responses:
         '200':
           description: List of Task Roles
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TaskRole'
+
 
     post:
       summary: Create a Task Role
@@ -217,7 +233,11 @@ paths:
             type: string
       responses:
         '200':
-          description: Task Role details
+          description: Get a Task Role by identifier
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/TaskRole'
 
     put:
       summary: Update a Task Role
@@ -253,6 +273,32 @@ paths:
         '200':
           description: Task Role deleted
 
+  /taskRoles/{id}/functionalRoles:
+    get:
+      summary: Get all Functional Roles this Task Role is assigned to
+      tags:
+        - Task Roles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of Functional Roles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  taskRoleId:
+                    type: string
+                    description: The Id of the Task Role
+                  functionRoles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/FunctionalRole'
 
   ############################
   # Domain Endpoints
@@ -265,6 +311,12 @@ paths:
       responses:
         '200':
           description: List of Domains
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Domain'
 
     post:
       summary: Create a Domain
@@ -282,7 +334,7 @@ paths:
 
   /domains/{id}:
     get:
-      summary: Get a Domain
+      summary: Get a Domain by identifier
       tags:
         - Domains
       parameters:
@@ -294,6 +346,10 @@ paths:
       responses:
         '200':
           description: Domain details
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Domain'
 
     put:
       summary: Update a Domain
@@ -368,6 +424,19 @@ paths:
       responses:
         '200':
           description: List of Entity Types for the Domain
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                   domainId:
+                    type: string
+                    description: The identifier of the domain
+                   taskRoles:
+                    type: array
+                    items: 
+                      $ref: '#/components/schemas/EntityType'
+
 
   ############################
   # Entity Type Endpoints
@@ -380,6 +449,12 @@ paths:
       responses:
         '200':
           description: List of Entity Types
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EntityType'
+
 
     post:
       summary: Create an Entity Type
@@ -461,7 +536,22 @@ paths:
       responses:
         '200':
           description: List of Domains
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  entityTypeId:
+                    type: string
+                    description: The ID of the Entity Type
+                  domains:
+                    type: array
+                    items: 
+                      $ref: '#/components/schemas/Domain'
 
+############################
+# Components
+############################
 components:
   schemas:
     FunctionalRole:
