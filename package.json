@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "description": "PodiumD Authorization API",
   "main": "./src/server.js",
-  "author": "Hugo ter Doest",
+  "author": "Hugo W.L. ter Doest",
   "license": "EUPL-1.2",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon",
+    "start:dev": "cross-env NODE_ENV=development nodemon",
+    "start:prod": "cross-env NODE_ENV=production node ./src/server.js",
     "test": "cross-env NODE_ENV=test jest --runInBand",
     "test:watch": "cross-env NODE_ENV=test jest --watch"
   },
@@ -16,9 +17,6 @@
     "Policies",
     "Zaakgericht Werken"
   ],
-  "author": "Hugo W.L. ter Doest",
-  "license": "EUPL-1.2",
-  "description": "PodiumD Autorisatie Beheer Component",
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
