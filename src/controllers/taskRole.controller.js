@@ -1,4 +1,4 @@
-const { TaskRole } = require("../models/associations");
+const { TaskRole, FunctionalRole } = require("../models/associations");
 
 exports.getTaskRoles = async (req, res) => {
   try {
@@ -50,7 +50,25 @@ exports.deleteTaskRole = async (req, res) => {
     if (!taskRole) return res.status(404).json({ error: "Task Role not found" });
 
     await taskRole.destroy();
-    res.json({ message: "Task Role deleted successfully" });
+    res.status(204).json();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// 🔵 Get Functional Roles Assigned to a Task Role
+exports.getFunctionalRolesByTaskRole = async (req, res) => {
+  try {
+    const { taskRoleId } = req.params;
+
+    // Fetch Task Role with associated Functional Roles
+    const taskRole = await TaskRole.findByPk(taskRoleId, {
+      include: [{ model: FunctionalRole, attributes: ["id", "name"] }],
+    });
+
+    if (!taskRole) return res.status(404).json({ error: "Task Role not found" });
+
+    res.json({ taskRoleId, name: taskRole.name, functionalRoles: taskRole.FunctionalRoles });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -11,4 +11,8 @@ TaskRole.belongsToMany(FunctionalRole, { through: "FunctionalRoleTaskRole" });
 Domain.belongsToMany(EntityType, { through: "DomainEntityType" });
 EntityType.belongsToMany(Domain, { through: "DomainEntityType" });
 
+// Many-to-Many: Functional Roles <-> Domains
+FunctionalRole.belongsToMany(Domain, { through: "FunctionalRoleDomain" });
+Domain.belongsToMany(FunctionalRole, { through: "FunctionalRoleDomain" });
+
 module.exports = { FunctionalRole, TaskRole, Domain, EntityType };
