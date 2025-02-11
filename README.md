@@ -23,7 +23,7 @@ This API provides a **structured authorization model** where:
 ### **1️⃣ Clone the Repository**
 ```bash
 git clone https://github.com/yourusername/authorization-api.git
-cd authorization-api
+cd pabc-api
 ```
 ### **2️⃣ Install Dependencies**
 ```bash
@@ -31,7 +31,7 @@ npm install
 ```
 
 ### **3️⃣ Configure Environment Variables**
-Create a `.env` file in the project root:
+There are three `.env` files in the root of the project, for testing, development and production. Variables are as follows:
 
 ```bash
 DB_NAME=auth_db
@@ -41,16 +41,18 @@ DB_HOST=localhost
 PORT=5000
 ```
 
+`PORT` is the port of the API server.
+
 ### **4️⃣ Run PostgreSQL in Docker (Optional)**
-If using Docker, create a `docker-compose.yml` and run:
+To start up Postgres and pgAdmin you can use Docker Compose:
 ```
 docker-compose up -d
 ```
 
 ### **5️⃣ Start the API**
 ```bash
-npm start
-```	
+npm start:dev
+```
 
 # 🔌 **API Usage**
 
@@ -293,17 +295,32 @@ Response:
 ```
 
 # ✅ Running Tests
-
 To run the tests, navigate to the root directory of the repository and run the following command:
 
 ```bash
-NODE_ENV=test npm test
+npm run test
 ```
 Tested Features: 
 - CRUD operations for Functional Roles, Task Roles, Domains, Entity Types
 - Assigning Task Roles to Functional Roles
 - Assigning Entity Types to Domains
 - Querying relationships between entities
+
+# ✅ Developing
+For development you can run the development server:
+
+```bash
+npm run start:dev
+```
+
+It starts the server with `nodemon` which restarts the server with every change.
+
+# ✅ Production
+For production the server is started as follows:
+
+```bash
+npm run start:prod
+```
 
 # 📜 License
 This project is licensed under the EUPL 1.2 License. Feel free to use and modify it! 🚀
