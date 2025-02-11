@@ -325,5 +325,7 @@ For production the server is started as follows:
 npm run start:prod
 ```
 
+Alternatively, there is a Dockerfile included to create a Docker image.
+
 # 📜 License
 This project is licensed under the EUPL 1.2 License. Feel free to use and modify it! 🚀
