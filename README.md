@@ -79,8 +79,7 @@ Response:
 ```json
 {
   "id": "uuid",
-  "name": "Admin",
-  "createdAt": "2024-02-05T12:00:00Z"
+  "name": "Admin"
 }
 ```
 
