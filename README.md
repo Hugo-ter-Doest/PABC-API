@@ -53,6 +53,10 @@ docker-compose up -d
 ```bash
 npm start:dev
 ```
+or
+```bash
+npm start:prod
+```
 
 # 🔌 **API Usage**
 
