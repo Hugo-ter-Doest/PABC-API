@@ -1,14 +1,14 @@
-const { startServer } = require("../../server");
-const sequelize = require("../../config/db");
+const { startServer } = require("../../server")
+const sequelize = require("../../config/db")
 
-let server;
+let server
 
 beforeAll(async () => {
-  await sequelize.sync({ force: true }); // Reset test database
-  server = await startServer(); // Start server once for tests
+  await sequelize.sync({ force: true })
+  server = await startServer()
 });
 
 afterAll(async () => {
-  await sequelize.close(); // Close DB connection
-  server.close(); // Stop server after tests
-});
+  await sequelize.close()
+  server.close()
+})
