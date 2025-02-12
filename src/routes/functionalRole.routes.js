@@ -8,9 +8,7 @@ const {
   deleteFunctionalRole,
   getFunctionalRolesDetails,
   assignDomainsToFunctionalRole,
-  getDomainsByFunctionalRole,
-  assignTaskRolesToFunctionalRole,
-  getTaskRolesByFunctionalRole
+  getDomainsByFunctionalRole
 } = require("../controllers/functionalRole.controller");
 
 router.get("/", getFunctionalRoles);
@@ -23,9 +21,5 @@ router.post("/details", getFunctionalRolesDetails);
 router.post("/:functionalRoleId/domains", assignDomainsToFunctionalRole);
 // Route to retrieve Domains assigned to a Functional Role
 router.get("/:functionalRoleId/domains", getDomainsByFunctionalRole);
-// Route to assign Task Roles to a Functional Role
-router.post("/:functionalRoleId/taskRoles", assignTaskRolesToFunctionalRole);
-// Route to retrieve Task Roles assigned to a Functional Role
-router.get("/:functionalRoleId/taskRoles", getTaskRolesByFunctionalRole);
 
 module.exports = router;

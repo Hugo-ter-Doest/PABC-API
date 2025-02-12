@@ -92,58 +92,6 @@ paths:
         '200':
           description: Functional Role deleted
 
-  /functionalRoles/{id}/taskRoles:
-    post:
-      summary: Assign Task Roles to Functional Role
-      tags:
-        - Functional Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                taskRoleIds:
-                  type: array
-                  items:
-                    type: string
-      responses:
-        '200':
-          description: Task Roles assigned successfully
-
-    get:
-      summary: Get Task Roles assigned to a Functional Role
-      tags:
-        - Functional Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: List of Task Roles for the Functional Role
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  functionalRoleId:
-                    type: string
-                    description: Functional Role identifier
-                  taskRoles:
-                    type: array
-                    items: 
-                      $ref: '#/components/schemas/TaskRole'
-
   /functionalRoles/details:
     post:
       summary: Get Task Roles and Entity Types for a list of Functional Roles
@@ -272,33 +220,6 @@ paths:
       responses:
         '200':
           description: Task Role deleted
-
-  /taskRoles/{id}/functionalRoles:
-    get:
-      summary: Get all Functional Roles this Task Role is assigned to
-      tags:
-        - Task Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: List of Functional Roles
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  taskRoleId:
-                    type: string
-                    description: The Id of the Task Role
-                  functionRoles:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/FunctionalRole'
 
   ############################
   # Domain Endpoints
@@ -549,6 +470,111 @@ paths:
                     items: 
                       $ref: '#/components/schemas/Domain'
 
+  ############################
+  # FunctionalRoleDomains
+  ############################
+  /functionalRoleDomains:
+    get:
+      summary: Get all Functional Role-Domain associations
+      operationId: getFunctionalRoleDomains
+      tags:
+        - Functional Role-Domain Association
+      responses:
+        "200":
+          description: List of all Functional Role-Domain associations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FunctionalRoleDomain"
+
+    post:
+      summary: Create Functional Role-Domain Association
+      operationId: createFunctionalRoleDomain
+      tags:
+        - Functional Role-Domain Association
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateFunctionalRoleDomain"
+      responses:
+        '201':
+          description: Association (Functional Role, Domain) created
+
+  /functionalRoleDomains/{functionalRoleDomainId}/taskRoles:
+    post:
+      summary: Assign Task Roles to a Functional Role-Domain Association
+      operationId: assignTaskRolesToFunctionalRoleDomain
+      tags:
+        - Functional Role-Domain Association
+      parameters:
+        - in: path
+          name: functionalRoleDomainId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                taskRoleIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+              required:
+                - taskRoleIds
+      responses:
+        "200":
+          description: Task Roles successfully assigned to Functional Role-Domain Association
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  functionalRoleDomainId:
+                    type: string
+                    format: uuid
+                  taskRoles:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TaskRole"
+
+    get:
+      summary: Get Task Roles for a Functional Role-Domain Association
+      operationId: getTaskRolesForFunctionalRoleDomain
+      tags:
+        - Functional Role-Domain Association
+      parameters:
+        - in: path
+          name: functionalRoleDomainId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: List of Task Roles for the Functional Role-Domain Association
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  functionalRoleDomainId:
+                    type: string
+                    format: uuid
+                  taskRoles:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TaskRole"
+
 ############################
 # Components
 ############################
@@ -617,3 +643,26 @@ components:
       properties:
         name:
           type: string
+
+    FunctionalRoleDomain:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        functionalRoleId:
+          type: string
+          format: uuid
+        domainId:
+          type: string
+          format: uuid
+
+    CreateFunctionalRoleDomain:
+      type: object
+      properties:
+        functionalRoleId:
+          type: string
+          format: uuid
+        domainId:
+          type: string
+          format: uuid

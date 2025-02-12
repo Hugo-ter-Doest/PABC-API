@@ -5,8 +5,7 @@ const {
   getTaskRoleById,
   createTaskRole,
   updateTaskRole,
-  deleteTaskRole,
-  getFunctionalRolesByTaskRole
+  deleteTaskRole
 } = require("../controllers/taskRole.controller");
 
 router.get("/", getTaskRoles);
@@ -14,7 +13,5 @@ router.get("/:id", getTaskRoleById);
 router.post("/", createTaskRole);
 router.put("/:id", updateTaskRole);
 router.delete("/:id", deleteTaskRole);
-// Route to retrieve Functional Roles assigned to a Task Role
-router.get("/:taskRoleId/functionalRoles", getFunctionalRolesByTaskRole);
 
 module.exports = router;
