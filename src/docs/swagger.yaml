@@ -92,50 +92,6 @@ paths:
         '200':
           description: Functional Role deleted
 
-  /functionalRoles/details:
-    post:
-      summary: Get Task Roles and Entity Types for a list of Functional Roles
-      tags:
-        - Functional Roles
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                functionalRoleIds:
-                  type: array
-                  items:
-                    type: string
-              required:
-                - functionalRoleIds
-      responses:
-        '200':
-          description: List of Functional Roles with their Task Roles and Entity Types
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    functionalRoleId:
-                      type: string,
-                      description: Functional Role identifier
-                    taskRoles:
-                      type: array
-                      items:
-                        $ref: "#/components/schemas/TaskRole"
-                    accessibleEntityTypes:
-                      type: array
-                      items:
-                        $ref: "#/components/schemas/EntityType"
-        '400':
-          description: Invalid input
-        '404':
-          description: No Functional Roles found
-
   ############################
   # Task Role Endpoints
   ############################
@@ -580,6 +536,8 @@ paths:
   ################################
   /get-access-rights:
     post:
+      tags:
+        - get-access-rights
       summary: Get allowed task roles and entity types for a list of functional roles
       description: Returns a list of objects, where each object contains a list of task roles and a list of entity types.
       requestBody:
