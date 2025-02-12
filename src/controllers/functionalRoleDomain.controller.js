@@ -66,3 +66,37 @@ exports.getTaskRolesForFunctionalRoleDomain = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Get allowed task roles and entity types for a list of functional roles
+exports.getAllowedTaskRolesAndEntityTypes = async (req, res) => {
+  try {
+    const { functionalRoleIds } = req.body; // List of functional role IDs
+
+    if (!functionalRoleIds || !Array.isArray(functionalRoleIds) || functionalRoleIds.length === 0) {
+      return res.status(400).json({ error: "functionalRoleIds must be a non-empty array" });
+    }
+
+    // Find all FunctionalRoleDomain associations that match the given Functional Role IDs
+    const functionalRoleDomains = await FunctionalRoleDomain.findAll({
+      where: { FunctionalRoleId: functionalRoleIds },
+      include: [
+        { model: TaskRole, attributes: ["id", "name"] },
+        {
+          model: Domain,
+          attributes: ["id", "name"],
+          include: { model: EntityType, attributes: ["id", "name"] }, // Get associated Entity Types
+        },
+      ],
+    });
+
+    // Transform the data into a list of objects with task roles and entity types
+    const result = functionalRoleDomains.map((frd) => ({
+      taskRoles: frd.TaskRoles,
+      entityTypes: frd.Domain.EntityTypes,
+    }));
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

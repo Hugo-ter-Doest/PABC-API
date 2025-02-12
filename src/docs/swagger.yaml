@@ -575,6 +575,44 @@ paths:
                     items:
                       $ref: "#/components/schemas/TaskRole"
 
+  ################################
+  # This is the main call for clients to get all access rights
+  ################################
+  /get-access-rights:
+    post:
+      summary: Get allowed task roles and entity types for a list of functional roles
+      description: Returns a list of objects, where each object contains a list of task roles and a list of entity types.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                functionalRoleIds:
+                  type: array
+                  items:
+                    type: string
+                  description: List of functional role IDs
+      responses:
+        200:
+          description: List of allowed task roles and entity types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    taskRoles:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/TaskRole'
+                    entityTypes:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/EntityType'
+
 ############################
 # Components
 ############################

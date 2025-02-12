@@ -4,6 +4,7 @@ const {
   assignFunctionalRoleToDomain,
   assignTaskRolesToFunctionalRoleDomain,
   getTaskRolesForFunctionalRoleDomain,
+  getAllowedTaskRolesAndEntityTypes
 } = require("../controllers/functionalRoleDomain.controller");
 
 // Assign Functional Role to Domain (create the association)
@@ -14,5 +15,8 @@ router.post("/:functionalRoleDomainId/taskRoles", assignTaskRolesToFunctionalRol
 
 // Get Task Roles for a Functional Role-Domain pair
 router.get("/:functionalRoleDomainId/taskRoles", getTaskRolesForFunctionalRoleDomain);
+
+// Get allowed (Task Role, Entity Types) pairs for a list of Functional Roles
+router.post("/get-access-rights", getAllowedTaskRolesAndEntityTypes);
 
 module.exports = router;
