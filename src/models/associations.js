@@ -4,9 +4,18 @@ const TaskRole = require("./taskRole.model");
 const FunctionalRoleDomain = require("./functionalRoleDomain.model");
 const EntityType = require("./entityType.model");
 
-// 🔗 Many-to-Many: FunctionalRole <-> Domain (via FunctionalRoleDomain)
-FunctionalRole.belongsToMany(Domain, { through: FunctionalRoleDomain });
-Domain.belongsToMany(FunctionalRole, { through: FunctionalRoleDomain });
+
+// 🔗 Many-to-One: FunctionalRole -> FunctionalRoleDomain
+FunctionalRole.hasMany(FunctionalRoleDomain, { foreignKey: 'functionalRoleId' });
+
+// 🔗 Many-to-One: Domain -> FunctionalRoleDomain
+Domain.hasMany(FunctionalRoleDomain, { foreignKey: 'domainId' });
+
+// 🔗 Many-to-One: FunctionalRoleDomain -> FunctionalRole
+FunctionalRoleDomain.belongsTo(FunctionalRole, { foreignKey: 'functionalRoleId' });
+
+// 🔗 Many-to-One: FunctionalRoleDomain -> Domain
+FunctionalRoleDomain.belongsTo(Domain, { foreignKey: 'domainId' });
 
 // 🔗 Many-to-Many: FunctionalRoleDomain <-> TaskRole
 FunctionalRoleDomain.belongsToMany(TaskRole, { through: "FunctionalRoleDomainTaskRoles" });

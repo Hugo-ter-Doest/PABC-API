@@ -6,6 +6,7 @@ const functionalRoleRoutes = require("./routes/functionalRole.routes");
 const domainRoutes = require("./routes/domain.routes");
 const taskRoleRoutes = require("./routes/taskRole.routes");
 const entityTypeRoutes = require("./routes/entityType.routes");
+const functionalRoleDomainRoutes = require("./routes/functionalRoleDomain.routes");
 
 require("dotenv-flow").config();
 
@@ -17,6 +18,7 @@ app.use("/api/functionalRoles", functionalRoleRoutes);
 app.use("/api/domains", domainRoutes);
 app.use("/api/taskRoles", taskRoleRoutes);
 app.use("/api/entityTypes", entityTypeRoutes);
+app.use("/api/functionalRoleDomains", functionalRoleDomainRoutes);
 
 let server; // Declare server instance
 

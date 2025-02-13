@@ -1,10 +1,15 @@
 const { FunctionalRole, Domain, FunctionalRoleDomain, TaskRole } = require("../models/associations");
 
-// Assign Functional Role to Domain (creates a linking record)
-exports.assignFunctionalRoleToDomain = async (req, res) => {
+// ✅ Create an association between a Functional Role and a Domain
+exports.createFunctionalRoleDomain = async (req, res) => {
   try {
-    const { functionalRoleId, domainId } = req.params;
+    const { functionalRoleId, domainId } = req.body;
 
+    if (!functionalRoleId || !domainId) {
+      return res.status(400).json({ error: "functionalRoleId and domainId are required" });
+    }
+
+    // ✅ Check if Functional Role and Domain exist
     const functionalRole = await FunctionalRole.findByPk(functionalRoleId);
     const domain = await Domain.findByPk(domainId);
 
@@ -12,12 +17,38 @@ exports.assignFunctionalRoleToDomain = async (req, res) => {
       return res.status(404).json({ error: "Functional Role or Domain not found" });
     }
 
-    const [link, created] = await FunctionalRoleDomain.findOrCreate({
+    // ✅ Prevent duplicate associations
+    const [association, created] = await FunctionalRoleDomain.findOrCreate({
       where: { FunctionalRoleId: functionalRoleId, DomainId: domainId },
     });
 
-    res.json({ message: "Functional Role assigned to Domain", link, created });
+    if (!created) {
+      return res.status(400).json({ error: "Functional Role is already assigned to this Domain" });
+    }
+
+    // ✅ Explicitly include `functionalRoleId` and `domainId` in response
+    res.status(201).json({
+      id: association.id,
+      functionalRoleId,
+      domainId,
+    });
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/// Get all Functional Role-Domain associations
+exports.getAllFunctionalRoleDomains = async (req, res) => {
+  try {
+    const associations = await FunctionalRoleDomain.findAll({
+      include: [
+        { model: FunctionalRole, attributes: ["id", "name"] },
+        { model: Domain, attributes: ["id", "name"] }
+      ],
+    });
+    res.json(associations);
+  } catch (error) {
+    console.error("❌ Server Error:", error); // ✅ This will show the actual problem
     res.status(500).json({ error: error.message });
   }
 };
