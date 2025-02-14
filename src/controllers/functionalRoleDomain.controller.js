@@ -1,6 +1,7 @@
-const { FunctionalRole, Domain, FunctionalRoleDomain, TaskRole } = require("../models/associations");
+const { Op } = require('sequelize');
+const { FunctionalRole, Domain, FunctionalRoleDomain, TaskRole, EntityType } = require("../models/associations");
 
-// ✅ Create an association between a Functional Role and a Domain
+// Create an association between a Functional Role and a Domain
 exports.createFunctionalRoleDomain = async (req, res) => {
   try {
     const { functionalRoleId, domainId } = req.body;
@@ -9,7 +10,7 @@ exports.createFunctionalRoleDomain = async (req, res) => {
       return res.status(400).json({ error: "functionalRoleId and domainId are required" });
     }
 
-    // ✅ Check if Functional Role and Domain exist
+    // Check if Functional Role and Domain exist
     const functionalRole = await FunctionalRole.findByPk(functionalRoleId);
     const domain = await Domain.findByPk(domainId);
 
@@ -17,16 +18,16 @@ exports.createFunctionalRoleDomain = async (req, res) => {
       return res.status(404).json({ error: "Functional Role or Domain not found" });
     }
 
-    // ✅ Prevent duplicate associations
+    // Prevent duplicate associations
     const [association, created] = await FunctionalRoleDomain.findOrCreate({
-      where: { FunctionalRoleId: functionalRoleId, DomainId: domainId },
+      where: { functionalRoleId: functionalRoleId, domainId: domainId },
     });
 
     if (!created) {
       return res.status(400).json({ error: "Functional Role is already assigned to this Domain" });
     }
 
-    // ✅ Explicitly include `functionalRoleId` and `domainId` in response
+    // Explicitly include `functionalRoleId` and `domainId` in response
     res.status(201).json({
       id: association.id,
       functionalRoleId,
@@ -34,6 +35,22 @@ exports.createFunctionalRoleDomain = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+// Delete a Functional Role-Domain association
+exports.deleteFunctionalRoleDomain = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const association = await FunctionalRoleDomain.findByPk(id);
+    if (!association) {
+      return res.status(404).json({ error: 'Association not found' });
+    }
+    await association.destroy();
+    res.status(204).json({ message: 'Association deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting association:', error);
+    res.status(500).json({ error: 'Error deleting association' });
   }
 };
 
@@ -102,6 +119,7 @@ exports.getTaskRolesForFunctionalRoleDomain = async (req, res) => {
 exports.getAllowedTaskRolesAndEntityTypes = async (req, res) => {
   try {
     const { functionalRoleIds } = req.body; // List of functional role IDs
+    console.log('functionalRoleIds: ', functionalRoleIds)
 
     if (!functionalRoleIds || !Array.isArray(functionalRoleIds) || functionalRoleIds.length === 0) {
       return res.status(400).json({ error: "functionalRoleIds must be a non-empty array" });
@@ -109,25 +127,49 @@ exports.getAllowedTaskRolesAndEntityTypes = async (req, res) => {
 
     // Find all FunctionalRoleDomain associations that match the given Functional Role IDs
     const functionalRoleDomains = await FunctionalRoleDomain.findAll({
-      where: { FunctionalRoleId: functionalRoleIds },
+      where: { 
+        functionalRoleId: {
+          [Op.in]: functionalRoleIds
+        }
+      },
       include: [
-        { model: TaskRole, attributes: ["id", "name"] },
+        {
+          model: FunctionalRole,
+          attributes: ["id", "name"],
+        },
         {
           model: Domain,
           attributes: ["id", "name"],
-          include: { model: EntityType, attributes: ["id", "name"] }, // Get associated Entity Types
+          include: [
+            {
+              model: EntityType,
+              attributes: ["id", "name"],
+            },
+          ]
+        },
+        {
+          model: TaskRole,
+          attributes: ["id", "name"],
         },
       ],
     });
 
+    console.log('functionalRoleDomains: ', functionalRoleDomains)
+
+    // let results = []
     // Transform the data into a list of objects with task roles and entity types
-    const result = functionalRoleDomains.map((frd) => ({
-      taskRoles: frd.TaskRoles,
-      entityTypes: frd.Domain.EntityTypes,
-    }));
+    result = functionalRoleDomains.map((frd) => {
+      console.log('Inside the map for functionalRoleDomains: ', frd)
+      console.log('Domain: ', frd.Domain)
+      return {
+        taskRoles: frd.TaskRoles ?? [], // Ensure it's always an array
+        entityTypes: frd.Domain.EntityTypes ?? []
+      }
+    })
 
     res.json(result);
   } catch (error) {
+    console.log('Error: ', error.message);
     res.status(500).json({ error: error.message });
   }
 };

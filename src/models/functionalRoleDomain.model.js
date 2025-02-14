@@ -7,11 +7,11 @@ const FunctionalRoleDomain = sequelize.define("FunctionalRoleDomain", {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
-  FunctionalRoleId: {
+  functionalRoleId: {
     type: DataTypes.UUID,
     allowNull: false,
   },
-  DomainId: {
+  domainId: {
     type: DataTypes.UUID,
     allowNull: false,
   },
