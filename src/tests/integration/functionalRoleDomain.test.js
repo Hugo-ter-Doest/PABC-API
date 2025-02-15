@@ -65,23 +65,47 @@ describe("Functional Role-Domain Associations API", () => {
   describe("POST /api/functionalRoleDomains/allowed-task-roles-entity-types", () => {
     let functionalRole, domain, taskRole, entityType, functionalRoleDomain;
 
-    it('Should create test data', async () => {
-      // ✅ Create test data
-      functionalRole = await FunctionalRole.create({ name: "Admin1" });
-      domain = await Domain.create({ name: "Finance1" });
-      entityType = await EntityType.create({ name: "Invoice" });
-      taskRole = await TaskRole.create({ name: "Editor" });
+    const testData = {
+      functionalRole: {
+        name: "Medewerker Vergunningen",
+      },
+      domains: [
+        {
+          name: "Fysiek domein",
+        }
+      ],
+      entityTypes: [
+        {
+          name: "Zaaktype Sloop"
+        },
+        {
+          name: "Zaaktype Bouwvergunning"
+        }
+      ],
+      taskRoles: [
+        {
+          name: "Zaak behandelen",
+        }
+      ]
+    }
 
-      // ✅ Associate Entity Type with Domain
+    it('Should create test data', async () => {
+      functionalRole = await FunctionalRole.create(testData.functionalRole);
+      domain = await Domain.create(testData.domains[0]);
+      entityType = await EntityType.create(testData.entityTypes[0]);
+      entityType = await EntityType.create(testData.entityTypes[1]);
+      taskRole = await TaskRole.create(testData.taskRoles[0]);
+
+      // Associate Entity Type with Domain
       await domain.addEntityType(entityType);
 
-      // ✅ Create FunctionalRoleDomain association
+      // Create FunctionalRoleDomain association
       functionalRoleDomain = await FunctionalRoleDomain.create({
         functionalRoleId: functionalRole.id,
         domainId: domain.id,
       });
 
-      // ✅ Assign Task Role to FunctionalRoleDomain association
+      // Assign Task Role to FunctionalRoleDomain association
       await functionalRoleDomain.setTaskRoles([taskRole]);
     })
 
