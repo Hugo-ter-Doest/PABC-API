@@ -1,6 +1,6 @@
 const request = require("supertest");
 const { app } = require("../../server"); // Ensure this path is correct
-const { FunctionalRole, Domain, FunctionalRoleDomain, EntityType, TaskRole } = require("../../models/associations");
+const { FunctionalRole, Domain, FunctionalRoleDomain, EntityType, ApplicationRole } = require("../../models/associations");
 require("./setupTestDB");
 
 describe("Functional Role-Domain Associations API", () => {
@@ -62,8 +62,8 @@ describe("Functional Role-Domain Associations API", () => {
     });
   })
 
-  describe("POST /api/functionalRoleDomains/allowed-task-roles-entity-types", () => {
-    let functionalRole, domain, taskRole, entityType, functionalRoleDomain;
+  describe("POST /api/functionalRoleDomains/allowed-application-roles-entity-types", () => {
+    let functionalRole, domain, applicationRole, entityType, functionalRoleDomain;
 
     const testData = {
       functionalRole: {
@@ -82,7 +82,7 @@ describe("Functional Role-Domain Associations API", () => {
           name: "Zaaktype Bouwvergunning"
         }
       ],
-      taskRoles: [
+      applicationRoles: [
         {
           name: "Zaak behandelen",
         }
@@ -94,7 +94,7 @@ describe("Functional Role-Domain Associations API", () => {
       domain = await Domain.create(testData.domains[0]);
       entityType = await EntityType.create(testData.entityTypes[0]);
       entityType = await EntityType.create(testData.entityTypes[1]);
-      taskRole = await TaskRole.create(testData.taskRoles[0]);
+      applicationRole = await ApplicationRole.create(testData.applicationRoles[0]);
 
       // Associate Entity Type with Domain
       await domain.addEntityType(entityType);
@@ -105,11 +105,11 @@ describe("Functional Role-Domain Associations API", () => {
         domainId: domain.id,
       });
 
-      // Assign Task Role to FunctionalRoleDomain association
-      await functionalRoleDomain.setTaskRoles([taskRole]);
+      // Assign Application Role to FunctionalRoleDomain association
+      await functionalRoleDomain.setApplicationRoles([applicationRole]);
     })
 
-    it("should return allowed Task Roles and Entity Types for given Functional Roles", async () => {
+    it("should return allowed Application Roles and Entity Types for given Functional Roles", async () => {
       console.log('functionalRole.id:'+ functionalRole.id)
       const response = await request(app)
         .post("/api/functionalRoleDomains/getAccessRights")
@@ -119,16 +119,16 @@ describe("Functional Role-Domain Associations API", () => {
       expect(response.body.length).toBeGreaterThan(0); // ✅ Ensure at least one result
 
       const result = response.body[0]; // ✅ Get first result
-      expect(result).toHaveProperty("taskRoles");
+      expect(result).toHaveProperty("applicationRoles");
       expect(result).toHaveProperty("entityTypes");
-      expect(Array.isArray(result.taskRoles)).toBe(true); // ✅ taskRoles must be an array
+      expect(Array.isArray(result.applicationRoles)).toBe(true); // ✅ applicationRoles must be an array
       expect(Array.isArray(result.entityTypes)).toBe(true); // ✅ entityTypes must be an array
-      expect(result.taskRoles.length).toBeGreaterThan(0);
+      expect(result.applicationRoles.length).toBeGreaterThan(0);
       expect(result.entityTypes.length).toBeGreaterThan(0);
 
-      // ✅ Validate Task Role structure
-      expect(result.taskRoles[0]).toHaveProperty("id", taskRole.id);
-      expect(result.taskRoles[0]).toHaveProperty("name", taskRole.name);
+      // ✅ Validate Application Role structure
+      expect(result.applicationRoles[0]).toHaveProperty("id", applicationRole.id);
+      expect(result.applicationRoles[0]).toHaveProperty("name", applicationRole.name);
 
       // ✅ Validate Entity Type structure
       expect(result.entityTypes[0]).toHaveProperty("id", entityType.id);

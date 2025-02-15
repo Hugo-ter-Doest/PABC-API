@@ -3,9 +3,9 @@ const router = express.Router();
 const {
   createFunctionalRoleDomain,
   getAllFunctionalRoleDomains,
-  assignTaskRolesToFunctionalRoleDomain,
-  getTaskRolesForFunctionalRoleDomain,
-  getAllowedTaskRolesAndEntityTypes,
+  assignApplicationRolesToFunctionalRoleDomain,
+  getApplicationRolesForFunctionalRoleDomain,
+  getAllowedApplicationRolesAndEntityTypes,
 } = require("../controllers/functionalRoleDomain.controller");
 
 // Create a Functional Role-Domain association
@@ -15,10 +15,10 @@ router.post("/", createFunctionalRoleDomain);
 router.get("/", getAllFunctionalRoleDomains);
 
 // Assign Task Roles to a Functional Role-Domain association
-router.post("/:functionalRoleDomainId/taskRoles", assignTaskRolesToFunctionalRoleDomain);
+router.post("/:functionalRoleDomainId/applicationRoles", assignApplicationRolesToFunctionalRoleDomain);
 
 // Get Task Roles assigned to a Functional Role-Domain association
-router.get("/:functionalRoleDomainId/taskRoles", getTaskRolesForFunctionalRoleDomain);
+router.get("/:functionalRoleDomainId/applicationRoles", getApplicationRolesForFunctionalRoleDomain);
 
-router.post("/getAccessRights", getAllowedTaskRolesAndEntityTypes);
+router.post("/getAccessRights", getAllowedApplicationRolesAndEntityTypes);
 module.exports = router;

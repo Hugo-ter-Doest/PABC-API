@@ -1,47 +1,4 @@
-const { FunctionalRole, TaskRole, Domain } = require("../models/associations");
-
-exports.getFunctionalRolesDetails = async (req, res) => {
-  try {
-    const { functionalRoleIds } = req.body
-
-    if (!functionalRoleIds || !Array.isArray(functionalRoleIds)) {
-      return res.status(400).json({ error: "Invalid input: functionalRoleIds must be an array of IDs" })
-    }
-
-    const functionalRoles = await FunctionalRole.findAll({
-      where: { id: functionalRoleIds },
-      include: [{ model: TaskRole, attributes: ["id", "name"] }]
-    });
-
-    if (!functionalRoles.length) {
-      return res.status(404).json({ error: "No Functional Roles found" })
-    }
-
-    const results = await Promise.all(
-      functionalRoles.map(async (functionalRole) => {
-        // Get domains assigned to the Functional Role
-        const domains = await functionalRole.getDomains()
-
-        // Get all Entity Types from assigned Domains
-        let accessibleEntityTypes = []
-        for (const domain of domains) {
-          const entityTypes = await domain.getEntityTypes({ attributes: ["id", "name"] })
-          accessibleEntityTypes = [...accessibleEntityTypes, ...entityTypes]
-        }
-
-        return {
-          functionalRoleId: functionalRole.id,
-          taskRoles: functionalRole.TaskRoles,
-          accessibleEntityTypes
-        }
-      })
-    )
-
-    res.json(results)
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-};
+const { FunctionalRole, Domain } = require("../models/associations");
 
 exports.getFunctionalRoles = async (req, res) => {
   try {
@@ -135,47 +92,6 @@ exports.getDomainsByFunctionalRole = async (req, res) => {
     if (!functionalRole) return res.status(404).json({ error: "Functional Role not found" })
 
     res.json({ functionalRoleId, name: functionalRole.name, domains: functionalRole.Domains })
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-}
-
-// 🟢 Assign Task Roles to a Functional Role
-exports.assignTaskRolesToFunctionalRole = async (req, res) => {
-  try {
-    const { functionalRoleId } = req.params
-    const { taskRoleIds } = req.body
-
-    // Check if Functional Role exists
-    const functionalRole = await FunctionalRole.findByPk(functionalRoleId)
-    if (!functionalRole) return res.status(404).json({ error: "Functional Role not found" })
-
-    // Fetch Task Roles by given IDs
-    const taskRoles = await TaskRole.findAll({ where: { id: taskRoleIds } })
-    if (!taskRoles.length) return res.status(400).json({ error: "No valid Task Roles found" })
-
-    // Associate the Functional Role with the Task Roles
-    await functionalRole.setTaskRoles(taskRoles)
-
-    res.json({ message: "Task Roles assigned successfully", functionalRoleId, taskRoles })
-  } catch (error) {
-    res.status(500).json({ error: error.message })
-  }
-};
-
-// 🔵 Get Task Roles Assigned to a Functional Role
-exports.getTaskRolesByFunctionalRole = async (req, res) => {
-  try {
-    const { functionalRoleId } = req.params
-
-    // Fetch Functional Role with associated Task Roles
-    const functionalRole = await FunctionalRole.findByPk(functionalRoleId, {
-      include: [{ model: TaskRole, attributes: ["id", "name"] }],
-    });
-
-    if (!functionalRole) return res.status(404).json({ error: "Functional Role not found" })
-
-    res.json({ functionalRoleId, taskRoles: functionalRole.TaskRoles })
   } catch (error) {
     res.status(500).json({ error: error.message })
   }

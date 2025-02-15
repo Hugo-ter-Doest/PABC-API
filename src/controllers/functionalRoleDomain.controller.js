@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { FunctionalRole, Domain, FunctionalRoleDomain, TaskRole, EntityType } = require("../models/associations");
+const { FunctionalRole, Domain, FunctionalRoleDomain, ApplicationRole, EntityType } = require("../models/associations");
 
 // Create an association between a Functional Role and a Domain
 exports.createFunctionalRoleDomain = async (req, res) => {
@@ -70,11 +70,11 @@ exports.getAllFunctionalRoleDomains = async (req, res) => {
   }
 };
 
-// Assign Task Roles to a Functional Role & Domain
-exports.assignTaskRolesToFunctionalRoleDomain = async (req, res) => {
+// Assign Application Roles to a Functional Role & Domain
+exports.assignApplicationRolesToFunctionalRoleDomain = async (req, res) => {
   try {
     const { functionalRoleDomainId } = req.params;
-    const { taskRoleIds } = req.body; // Array of Task Role IDs
+    const { applicationRoleIds } = req.body; // Array of Application Role IDs
 
     const link = await FunctionalRoleDomain.findByPk(functionalRoleDomainId);
 
@@ -82,41 +82,41 @@ exports.assignTaskRolesToFunctionalRoleDomain = async (req, res) => {
       return res.status(404).json({ error: "Functional Role-Domain association not found" });
     }
 
-    const taskRoles = await TaskRole.findAll({ where: { id: taskRoleIds } });
+    const applicationRoles = await ApplicationRole.findAll({ where: { id: applicationRoleIds } });
 
-    if (taskRoles.length === 0) {
-      return res.status(400).json({ error: "No valid Task Roles found" });
+    if (applicationRoles.length === 0) {
+      return res.status(400).json({ error: "No valid Application Roles found" });
     }
 
-    await link.setTaskRoles(taskRoles);
+    await link.setApplicationRoles(applicationRoles);
 
-    res.json({ message: "Task Roles assigned successfully", functionalRoleDomainId, taskRoles });
+    res.json({ message: "Application Roles assigned successfully", functionalRoleDomainId, applicationRoles });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Get Task Roles for a Functional Role & Domain
-exports.getTaskRolesForFunctionalRoleDomain = async (req, res) => {
+// Get Application Roles for a Functional Role & Domain
+exports.getApplicationRolesForFunctionalRoleDomain = async (req, res) => {
   try {
     const { functionalRoleDomainId } = req.params;
 
     const link = await FunctionalRoleDomain.findByPk(functionalRoleDomainId, {
-      include: { model: TaskRole, attributes: ["id", "name"] },
+      include: { model: ApplicationRole, attributes: ["id", "name"] },
     });
 
     if (!link) {
       return res.status(404).json({ error: "Functional Role-Domain association not found" });
     }
 
-    res.json({ functionalRoleDomainId, taskRoles: link.TaskRoles });
+    res.json({ functionalRoleDomainId, applicationRoles: link.ApplicationRoles });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Get allowed task roles and entity types for a list of functional roles
-exports.getAllowedTaskRolesAndEntityTypes = async (req, res) => {
+// Get allowed application roles and entity types for a list of functional roles
+exports.getAllowedApplicationRolesAndEntityTypes = async (req, res) => {
   try {
     const { functionalRoleIds } = req.body; // List of functional role IDs
     console.log('functionalRoleIds: ', functionalRoleIds)
@@ -148,7 +148,7 @@ exports.getAllowedTaskRolesAndEntityTypes = async (req, res) => {
           ]
         },
         {
-          model: TaskRole,
+          model: ApplicationRole,
           attributes: ["id", "name"],
         },
       ],
@@ -157,12 +157,12 @@ exports.getAllowedTaskRolesAndEntityTypes = async (req, res) => {
     console.log('functionalRoleDomains: ', functionalRoleDomains)
 
     // let results = []
-    // Transform the data into a list of objects with task roles and entity types
+    // Transform the data into a list of objects with application roles and entity types
     result = functionalRoleDomains.map((frd) => {
       console.log('Inside the map for functionalRoleDomains: ', frd)
       console.log('Domain: ', frd.Domain)
       return {
-        taskRoles: frd.TaskRoles ?? [], // Ensure it's always an array
+        applicationRoles: frd.ApplicationRoles ?? [], // Ensure it's always an array
         entityTypes: frd.Domain.EntityTypes ?? []
       }
     })

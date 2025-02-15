@@ -6,7 +6,6 @@ const {
   createFunctionalRole,
   updateFunctionalRole,
   deleteFunctionalRole,
-  getFunctionalRolesDetails,
   assignDomainsToFunctionalRole,
   getDomainsByFunctionalRole
 } = require("../controllers/functionalRole.controller");
@@ -16,7 +15,6 @@ router.get("/:id", getFunctionalRoleById);
 router.post("/", createFunctionalRole);
 router.put("/:id", updateFunctionalRole);
 router.delete("/:id", deleteFunctionalRole);
-router.post("/details", getFunctionalRolesDetails);
 // Route to assign Domains to a Functional Role
 router.post("/:functionalRoleId/domains", assignDomainsToFunctionalRole);
 // Route to retrieve Domains assigned to a Functional Role
