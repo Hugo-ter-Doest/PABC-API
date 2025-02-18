@@ -600,6 +600,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
 
@@ -616,6 +617,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
         application:
@@ -636,6 +638,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
 
@@ -652,6 +655,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
 
