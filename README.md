@@ -7,6 +7,9 @@ This API provides a **structured authorization model** where:
 - **Domains** consist of **Entity Types**.  
 - **If a Functional Role has access to a Domain, its Task Roles inherit access to that Domain's Entity Types.**  
 
+The API implements this information model:
+
+![Informatiomodel](./images/PABC-informatiemodel.drawio.png)
 ---
 
 ## ⚡ **Features**
