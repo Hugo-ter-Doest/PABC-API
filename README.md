@@ -87,8 +87,8 @@ Overview of available operations:
 | **Remove All Entity Types from a Domain**            | `DELETE /api/domains/:id/entityTypes`         | Removes all Entity Types assigned to a Domain. |
 | **Get Access Rights**                                | `POST /api/getAccessRights`            | Returns Application Roles, Data Roles, and Entity Types for a set of `(FunctionalRole, Domain)` pairs. |
 
-
-
+Here is a link to inspect the API:
+[Redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/master/src/openklant/components/klantinteracties/openapi.yaml)
 
 # ✅ Running Tests
 To run the tests, navigate to the root directory of the repository and run the following command:
