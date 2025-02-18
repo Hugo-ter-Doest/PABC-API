@@ -1,6 +1,8 @@
 # 📌 **PodiumD Autorisatie Beheer API**  
 
-This API provides a **structured authorization model** for fine-grained role-based access to resources involved in Zaakgericht Werken (ZGW). The model is based on the following information:
+This API provides a **structured authorization model** for fine-grained role-based access (RBAC) to resources involved in Zaakgericht Werken (ZGW). It will serve as a Policy Information Point (PIP) in the context of a Policy Based Access Control (PBAC) architecture.
+
+The model is based on the following information:
 - **Functional Roles** are assigned **Task Roles**.  
 - **Functional Roles** have access to **Domains**.  
 - **Domains** consist of **Entity Types**.  
