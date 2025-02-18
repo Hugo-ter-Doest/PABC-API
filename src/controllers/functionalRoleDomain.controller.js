@@ -119,7 +119,7 @@ exports.getApplicationRolesForFunctionalRoleDomain = async (req, res) => {
 exports.getAllowedApplicationRolesAndEntityTypes = async (req, res) => {
   try {
     const { functionalRoleIds } = req.body // List of functional role IDs
-    console.log('functionalRoleIds: ', functionalRoleIds)
+    // console.log('functionalRoleIds: ', functionalRoleIds)
 
     if (!functionalRoleIds || !Array.isArray(functionalRoleIds) || functionalRoleIds.length === 0) {
       return res.status(400).json({ error: "functionalRoleIds must be a non-empty array" })
@@ -154,13 +154,13 @@ exports.getAllowedApplicationRolesAndEntityTypes = async (req, res) => {
       ],
     })
 
-    console.log('functionalRoleDomains: ', functionalRoleDomains)
+    // console.log('functionalRoleDomains: ', functionalRoleDomains)
 
     // let results = []
     // Transform the data into a list of objects with application roles and entity types
     result = functionalRoleDomains.map((frd) => {
-      console.log('Inside the map for functionalRoleDomains: ', frd)
-      console.log('Domain: ', frd.Domain)
+      // console.log('Inside the map for functionalRoleDomains: ', frd)
+      // console.log('Domain: ', frd.Domain)
       return {
         applicationRoles: frd.ApplicationRoles ?? [], // Ensure it's always an array
         entityTypes: frd.Domain.EntityTypes ?? []

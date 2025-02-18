@@ -22,8 +22,8 @@ exports.getApplicationRoleById = async (req, res) => {
 
 exports.createApplicationRole = async (req, res) => {
   try {
-    const { name } = req.body
-    const applicationRole = await ApplicationRole.create({ name })
+    const { name, application } = req.body
+    const applicationRole = await ApplicationRole.create({ name, application })
     res.status(201).json(applicationRole)
   } catch (error) {
     res.status(500).json({ error: error.message })

@@ -7,10 +7,16 @@ require("./setupTestDB")
 describe("Application Role API", () => {
   let applicationRoleId
 
+  const applicationRole1 = {
+    name: "Viewer",
+    application: "ZAC"
+  }
+
   it("should create a Application Role", async () => {
-    const res = await request(app).post("/api/applicationRoles").send({ name: "Viewer" })
+    const res = await request(app).post("/api/applicationRoles").send(applicationRole1)
     expect(res.statusCode).toEqual(201)
-    expect(res.body.name).toBe("Viewer")
+    expect(res.body.name).toBe(applicationRole1.name)
+    expect(res.body.application).toBe(applicationRole1.application)
     applicationRoleId = res.body.id // Store for later tests
   })
 
@@ -26,8 +32,13 @@ describe("Application Role API", () => {
     expect(res.body.id).toBe(applicationRoleId)
   })
 
+  const applicationRole2 = {
+    name: "Editor",
+    application: "ZAC"
+  }
+
   it("should update a Application Role", async () => {
-    const res = await request(app).put(`/api/applicationRoles/${applicationRoleId}`).send({ name: "Editor" })
+    const res = await request(app).put(`/api/applicationRoles/${applicationRoleId}`).send(applicationRole2)
     expect(res.statusCode).toEqual(200)
     expect(res.body.name).toBe("Editor")
   })

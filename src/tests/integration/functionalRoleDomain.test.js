@@ -14,7 +14,7 @@ describe("Functional Role-Domain Associations API", () => {
       .post("/api/functionalRoleDomains")
       .send({ functionalRoleId: functionalRole.id, domainId: domain.id })
 
-      console.log("Response Body:", response.body) // ✅ Add this to debug
+      // console.log("Response Body:", response.body) // ✅ Add this to debug
 
       expect(response.status).toBe(201)
       expect(response.body).toHaveProperty("id")
@@ -85,6 +85,7 @@ describe("Functional Role-Domain Associations API", () => {
       applicationRoles: [
         {
           name: "Zaak behandelen",
+          application: "ZAC"
         }
       ]
     }
@@ -110,27 +111,27 @@ describe("Functional Role-Domain Associations API", () => {
     })
 
     it("should return allowed Application Roles and Entity Types for given Functional Roles", async () => {
-      console.log('functionalRole.id:'+ functionalRole.id)
+      // console.log('functionalRole.id:'+ functionalRole.id)
       const response = await request(app)
         .post("/api/functionalRoleDomains/getAccessRights")
         .send({ functionalRoleIds: [functionalRole.id] })
 
       expect(response.status).toBe(200)
-      expect(response.body.length).toBeGreaterThan(0) // ✅ Ensure at least one result
+      expect(response.body.length).toBeGreaterThan(0) // Ensure at least one result
 
-      const result = response.body[0] // ✅ Get first result
+      const result = response.body[0] // Get first result
       expect(result).toHaveProperty("applicationRoles")
       expect(result).toHaveProperty("entityTypes")
-      expect(Array.isArray(result.applicationRoles)).toBe(true) // ✅ applicationRoles must be an array
-      expect(Array.isArray(result.entityTypes)).toBe(true) // ✅ entityTypes must be an array
+      expect(Array.isArray(result.applicationRoles)).toBe(true) // applicationRoles must be an array
+      expect(Array.isArray(result.entityTypes)).toBe(true) // entityTypes must be an array
       expect(result.applicationRoles.length).toBeGreaterThan(0)
       expect(result.entityTypes.length).toBeGreaterThan(0)
 
-      // ✅ Validate Application Role structure
+      // Validate Application Role structure
       expect(result.applicationRoles[0]).toHaveProperty("id", applicationRole.id)
       expect(result.applicationRoles[0]).toHaveProperty("name", applicationRole.name)
 
-      // ✅ Validate Entity Type structure
+      // Validate Entity Type structure
       expect(result.entityTypes[0]).toHaveProperty("id", entityType.id)
       expect(result.entityTypes[0]).toHaveProperty("name", entityType.name)
     })
