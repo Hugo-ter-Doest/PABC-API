@@ -618,6 +618,8 @@ components:
           type: string
         name:
           type: string
+        application:
+          type: string
 
     CreateApplicationRole:
       type: object
@@ -625,6 +627,8 @@ components:
         - name
       properties:
         name:
+          type: string
+        application:
           type: string
 
     Domain:
