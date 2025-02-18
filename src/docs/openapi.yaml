@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: PodiumD Authorization API
-  description: API for managing Functional Roles, Task Roles, Domains, and Entity Types with full CRUD and relationship support.
+  description: API for managing Functional Roles, Application Roles, Domains, and Entity Types with full CRUD and relationship support.
   version: 1.0.0
 servers:
   - url: http://localhost:5000/api
@@ -94,43 +94,43 @@ paths:
           description: Functional Role deleted
 
   ############################
-  # Task Role Endpoints
+  # Application Role Endpoints
   ############################
-  /taskRoles:
+  /applicationRoles:
     get:
-      summary: Get all Task Roles
+      summary: Get all Application Roles
       tags:
-        - Task Roles
+        - Application Roles
       responses:
         '200':
-          description: List of Task Roles
+          description: List of Application Roles
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TaskRole'
+                  $ref: '#/components/schemas/ApplicationRole'
 
 
     post:
-      summary: Create a Task Role
+      summary: Create a Application Role
       tags:
-        - Task Roles
+        - Application Roles
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTaskRole"
+              $ref: "#/components/schemas/CreateApplicationRole"
       responses:
         '201':
-          description: Task Role created
+          description: Application Role created
 
-  /taskRoles/{id}:
+  /applicationRoles/{id}:
     get:
-      summary: Get a Task Role
+      summary: Get a Application Role
       tags:
-        - Task Roles
+        - Application Roles
       parameters:
         - name: id
           in: path
@@ -139,16 +139,16 @@ paths:
             type: string
       responses:
         '200':
-          description: Get a Task Role by identifier
+          description: Get a Application Role by identifier
           content:
             application/json:
               schema: 
-                $ref: '#/components/schemas/TaskRole'
+                $ref: '#/components/schemas/ApplicationRole'
 
     put:
-      summary: Update a Task Role
+      summary: Update a Application Role
       tags:
-        - Task Roles
+        - Application Roles
       parameters:
         - name: id
           in: path
@@ -160,15 +160,15 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTaskRole"
+              $ref: "#/components/schemas/CreateApplicationRole"
       responses:
         '200':
-          description: Task Role updated
+          description: Application Role updated
 
     delete:
-      summary: Delete a Task Role
+      summary: Delete a Application Role
       tags:
-        - Task Roles
+        - Application Roles
       parameters:
         - name: id
           in: path
@@ -177,7 +177,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Task Role deleted
+          description: Application Role deleted
 
   ############################
   # Domain Endpoints
@@ -311,7 +311,7 @@ paths:
                    domainId:
                     type: string
                     description: The identifier of the domain
-                   taskRoles:
+                   applicationRoles:
                     type: array
                     items: 
                       $ref: '#/components/schemas/EntityType'
@@ -479,10 +479,10 @@ paths:
         "200":
           description: Functional Role-Domain association deleted
 
-  /functionalRoleDomains/{functionalRoleDomainId}/taskRoles:
+  /functionalRoleDomains/{functionalRoleDomainId}/applicationRoles:
     post:
-      summary: Assign Task Roles to a Functional Role-Domain Association
-      operationId: assignTaskRolesToFunctionalRoleDomain
+      summary: Assign Application Roles to a Functional Role-Domain Association
+      operationId: assignApplicationRolesToFunctionalRoleDomain
       tags:
         - Functional Role-Domain Association
       parameters:
@@ -499,16 +499,16 @@ paths:
             schema:
               type: object
               properties:
-                taskRoleIds:
+                applicationRoleIds:
                   type: array
                   items:
                     type: string
                     format: uuid
               required:
-                - taskRoleIds
+                - applicationRoleIds
       responses:
         "200":
-          description: Task Roles successfully assigned to Functional Role-Domain Association
+          description: Application Roles successfully assigned to Functional Role-Domain Association
           content:
             application/json:
               schema:
@@ -517,14 +517,14 @@ paths:
                   functionalRoleDomainId:
                     type: string
                     format: uuid
-                  taskRoles:
+                  applicationRoles:
                     type: array
                     items:
-                      $ref: "#/components/schemas/TaskRole"
+                      $ref: "#/components/schemas/ApplicationRole"
 
     get:
-      summary: Get Task Roles for a Functional Role-Domain Association
-      operationId: getTaskRolesForFunctionalRoleDomain
+      summary: Get Application Roles for a Functional Role-Domain Association
+      operationId: getApplicationRolesForFunctionalRoleDomain
       tags:
         - Functional Role-Domain Association
       parameters:
@@ -536,7 +536,7 @@ paths:
             format: uuid
       responses:
         "200":
-          description: List of Task Roles for the Functional Role-Domain Association
+          description: List of Application Roles for the Functional Role-Domain Association
           content:
             application/json:
               schema:
@@ -545,10 +545,10 @@ paths:
                   functionalRoleDomainId:
                     type: string
                     format: uuid
-                  taskRoles:
+                  applicationRoles:
                     type: array
                     items:
-                      $ref: "#/components/schemas/TaskRole"
+                      $ref: "#/components/schemas/ApplicationRole"
 
   ################################
   # This is the main call for clients to get all access rights
@@ -557,8 +557,8 @@ paths:
     post:
       tags:
         - get-access-rights
-      summary: Get allowed task roles and entity types for a list of functional roles
-      description: Returns a list of objects, where each object contains a list of task roles and a list of entity types.
+      summary: Get allowed application roles and entity types for a list of functional roles
+      description: Returns a list of objects, where each object contains a list of application roles and a list of entity types.
       requestBody:
         required: true
         content:
@@ -573,7 +573,7 @@ paths:
                   description: List of functional role IDs
       responses:
         200:
-          description: List of allowed task roles and entity types
+          description: List of allowed application roles and entity types
           content:
             application/json:
               schema:
@@ -581,10 +581,10 @@ paths:
                 items:
                   type: object
                   properties:
-                    taskRoles:
+                    applicationRoles:
                       type: array
                       items:
-                        $ref: '#/components/schemas/TaskRole'
+                        $ref: '#/components/schemas/ApplicationRole'
                     entityTypes:
                       type: array
                       items:
@@ -611,7 +611,7 @@ components:
         name:
           type: string
 
-    TaskRole:
+    ApplicationRole:
       type: object
       properties:
         id:
@@ -619,7 +619,7 @@ components:
         name:
           type: string
 
-    CreateTaskRole:
+    CreateApplicationRole:
       type: object
       required:
         - name
