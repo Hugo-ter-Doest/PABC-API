@@ -95,7 +95,7 @@ Here are links to inspect the API:
 - [Redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
 - [Swagger](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
 
-# ✅ Running Tests
+# Running Tests
 To run the tests, navigate to the root directory of the repository and run the following command:
 
 ```bash
@@ -107,7 +107,7 @@ Tested Features:
 - Assigning Entity Types to Domains
 - Querying relationships between entities
 
-# ✅ Developing
+# Developing
 For development you can run the development server:
 
 ```bash
@@ -116,7 +116,7 @@ npm run start:dev
 
 It starts the server with `nodemon` which restarts the server with every change.
 
-# ✅ Production
+# Production
 For production the server is started as follows:
 
 ```bash
@@ -125,5 +125,5 @@ npm run start:prod
 
 Alternatively, there is a Dockerfile included to create a Docker image.
 
-# 📜 License
+# License
 This project is licensed under the EUPL 1.2 License. Feel free to use and modify it! 🚀
