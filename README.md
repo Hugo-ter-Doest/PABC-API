@@ -1,7 +1,6 @@
-# 📌 **Authorization API**  
-### **Role-Based Access Control (RBAC) API for Managing Functional Roles, Task Roles, Domains, and Entity Types**  
+# 📌 **PodiumD Autorisatie Beheer API**  
 
-This API provides a **structured authorization model** where:  
+This API provides a **structured authorization model** for fine-grained role-based access to resources involved in Zaakgericht Werken (ZGW). The model is based on the following information:
 - **Functional Roles** are assigned **Task Roles**.  
 - **Functional Roles** have access to **Domains**.  
 - **Domains** consist of **Entity Types**.  
