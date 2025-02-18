@@ -1,5 +1,5 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express")
+const router = express.Router()
 const {
   getEntityTypes,
   getEntityTypeById,
@@ -7,13 +7,13 @@ const {
   updateEntityType,
   deleteEntityType,
   getDomainsByEntityType 
-} = require("../controllers/entityType.controller");
+} = require("../controllers/entityType.controller")
 
-router.get("/", getEntityTypes);
-router.get("/:id", getEntityTypeById);
-router.post("/", createEntityType);
-router.put("/:id", updateEntityType);
-router.delete("/:id", deleteEntityType);
-router.get("/:entityTypeId/domains", getDomainsByEntityType);
+router.get("/", getEntityTypes)
+router.get("/:id", getEntityTypeById)
+router.post("/", createEntityType)
+router.put("/:id", updateEntityType)
+router.delete("/:id", deleteEntityType)
+router.get("/:entityTypeId/domains", getDomainsByEntityType)
 
-module.exports = router;
+module.exports = router

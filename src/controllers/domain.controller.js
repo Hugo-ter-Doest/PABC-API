@@ -7,28 +7,28 @@ exports.getDomains = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.getDomainById = async (req, res) => {
   try {
     const domain = await Domain.findByPk(req.params.id)
     if (!domain) return res.status(404).json({ error: "Domain not found" })
 
-    res.json(domain);
+    res.json(domain)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.createDomain = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name } = req.body
     const domain = await Domain.create({ name })
-    res.status(201).json(domain);
+    res.status(201).json(domain)
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.updateDomain = async (req, res) => {
   try {
@@ -42,7 +42,7 @@ exports.updateDomain = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.deleteDomain = async (req, res) => {
   try {
@@ -54,7 +54,7 @@ exports.deleteDomain = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 // 🟢 Assign Entity Types to a Domain
 exports.assignEntityTypesToDomain = async (req, res) => {
@@ -77,7 +77,7 @@ exports.assignEntityTypesToDomain = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 // 🔵 Get Entity Types Assigned to a Domain
 exports.getEntityTypesByDomain = async (req, res) => {
@@ -87,7 +87,7 @@ exports.getEntityTypesByDomain = async (req, res) => {
     // Fetch Domain with associated Entity Types
     const domain = await Domain.findByPk(domainId, {
       include: [{ model: EntityType, attributes: ["id", "name"] }],
-    });
+    })
 
     if (!domain) return res.status(404).json({ error: "Domain not found" })
 

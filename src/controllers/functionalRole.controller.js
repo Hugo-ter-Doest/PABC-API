@@ -1,4 +1,4 @@
-const { FunctionalRole, Domain } = require("../models/associations");
+const { FunctionalRole, Domain } = require("../models/associations")
 
 exports.getFunctionalRoles = async (req, res) => {
   try {
@@ -28,7 +28,7 @@ exports.createFunctionalRole = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.updateFunctionalRole = async (req, res) => {
   try {
@@ -54,7 +54,7 @@ exports.deleteFunctionalRole = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 // 🟢 Assign Domains to a Functional Role
 exports.assignDomainsToFunctionalRole = async (req, res) => {
@@ -77,7 +77,7 @@ exports.assignDomainsToFunctionalRole = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 // 🔵 Get Domains Assigned to a Functional Role
 exports.getDomainsByFunctionalRole = async (req, res) => {

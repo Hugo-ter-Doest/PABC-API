@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
+const { DataTypes } = require("sequelize")
+const sequelize = require("../config/db")
 
 const ApplicationRole = sequelize.define("ApplicationRole", {
   id: {
@@ -17,6 +17,6 @@ const ApplicationRole = sequelize.define("ApplicationRole", {
     allowNull: false,
     unique: false  
   },
-});
+})
 
-module.exports = ApplicationRole;
+module.exports = ApplicationRole

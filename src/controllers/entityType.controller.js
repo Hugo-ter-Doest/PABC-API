@@ -7,7 +7,7 @@ exports.getEntityTypes = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.getEntityTypeById = async (req, res) => {
   try {
@@ -18,7 +18,7 @@ exports.getEntityTypeById = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.createEntityType = async (req, res) => {
   try {
@@ -28,7 +28,7 @@ exports.createEntityType = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.updateEntityType = async (req, res) => {
   try {
@@ -42,7 +42,7 @@ exports.updateEntityType = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 exports.deleteEntityType = async (req, res) => {
   try {
@@ -54,7 +54,7 @@ exports.deleteEntityType = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
-};
+}
 
 // 🔵 Get Domains Assigned to an Entity Type
 exports.getDomainsByEntityType = async (req, res) => {

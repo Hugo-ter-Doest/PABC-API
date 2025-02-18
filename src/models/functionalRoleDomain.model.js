@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
+const { DataTypes } = require("sequelize")
+const sequelize = require("../config/db")
 
 const FunctionalRoleDomain = sequelize.define("FunctionalRoleDomain", {
   id: {
@@ -15,6 +15,6 @@ const FunctionalRoleDomain = sequelize.define("FunctionalRoleDomain", {
     type: DataTypes.UUID,
     allowNull: false,
   },
-});
+})
 
-module.exports = FunctionalRoleDomain;
+module.exports = FunctionalRoleDomain
