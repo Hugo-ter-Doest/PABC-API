@@ -459,7 +459,7 @@ paths:
       responses:
         '201':
           description: Association (Functional Role, Domain) created
-    
+  
     delete:
       summary: Delete a Functional Role-Domain Association
       operationId: deleteFunctionalRoleDomain
