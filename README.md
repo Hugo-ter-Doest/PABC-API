@@ -62,21 +62,32 @@ npm start:prod
 
 Overview of available operations:
 
-## 📌 API Endpoints Overview
-## 📌 API Endpoints Overview
+## 📌 CRUD Operations on Base Resources
 
-| **Resource**                      | **Create (C)**                          | **Read (R)**                              | **Update (U)**                          | **Delete (D)**                          | **Additional Calls** |
-|------------------------------------|-----------------------------------------|-------------------------------------------|-----------------------------------------|-----------------------------------------|----------------------|
-| **Functional Roles**               | `POST /api/functionalRoles`             | `GET /api/functionalRoles/:id`            | `PUT /api/functionalRoles/:id`          | `DELETE /api/functionalRoles/:id`       | `GET /api/functionalRoles` (List) |
-| **Domains**                        | `POST /api/domains`                     | `GET /api/domains/:id`                    | `PUT /api/domains/:id`                  | `DELETE /api/domains/:id`               | `GET /api/domains` (List) |
-| **Entity Types**                    | `POST /api/entityTypes`                 | `GET /api/entityTypes/:id`                | `PUT /api/entityTypes/:id`              | `DELETE /api/entityTypes/:id`           | `GET /api/entityTypes` (List) |
-| **Application Roles (Task Roles)**  | `POST /api/applicationRoles`            | `GET /api/applicationRoles/:id`           | `PUT /api/applicationRoles/:id`         | `DELETE /api/applicationRoles/:id`      | `GET /api/applicationRoles` (List) |
-| **Data Roles**                      | `POST /api/dataRoles`                   | `GET /api/dataRoles/:id`                  | `PUT /api/dataRoles/:id`                | `DELETE /api/dataRoles/:id`             | `GET /api/dataRoles` (List) |
-| **Functional Role-Domain Associations** | `POST /api/functionalRoleDomains`       | `GET /api/functionalRoleDomains`          | ❌ Not updatable                        | `DELETE /api/functionalRoleDomains/:id` | `GET /api/functionalRoleDomains` (List) |
-| **Assign Application Roles**        | ❌ N/A                                   | ❌ N/A                                     | ❌ N/A                                   | ❌ N/A                                   | `POST /api/functionalRoleDomains/assign-role` |
-| **Get Access Rights**               | ❌ N/A                                   | `POST /api/access/getAccessRights`        | ❌ N/A                                   | ❌ N/A                                   | Returns Application & Data Roles for `(FunctionalRole, Domain)` pairs |
-| **Domain-EntityType Relationship**  | `POST /api/domains/:id/entityTypes`     | `GET /api/domains/:id/entityTypes`       | ❌ Not updatable                        | ❌ N/A                                   | Assigns multiple Entity Types to a Domain |
-| **Get Application Roles for (FunctionalRole, Domain)** | ❌ N/A | `GET /api/functionalRoleDomains/:id/applicationRoles` | ❌ N/A | ❌ N/A | Retrieves all Application Roles for a specific Functional Role-Domain association |
+| **Resource**                      | **Create (C)**                          | **Read (R)**                              | **Update (U)**                          | **Delete (D)**                          |
+|------------------------------------|-----------------------------------------|-------------------------------------------|-----------------------------------------|-----------------------------------------|
+| **Functional Roles**               | `POST /api/functionalRoles`             | `GET /api/functionalRoles/:id`            | `PUT /api/functionalRoles/:id`          | `DELETE /api/functionalRoles/:id`       |
+| **Domains**                        | `POST /api/domains`                     | `GET /api/domains/:id`                    | `PUT /api/domains/:id`                  | `DELETE /api/domains/:id`               |
+| **Entity Types**                   | `POST /api/entityTypes`                 | `GET /api/entityTypes/:id`                | `PUT /api/entityTypes/:id`              | `DELETE /api/entityTypes/:id`           |
+| **Application Roles (Task Roles)**  | `POST /api/applicationRoles`            | `GET /api/applicationRoles/:id`           | `PUT /api/applicationRoles/:id`         | `DELETE /api/applicationRoles/:id`      |
+| **Data Roles**                      | `POST /api/dataRoles`                   | `GET /api/dataRoles/:id`                  | `PUT /api/dataRoles/:id`                | `DELETE /api/dataRoles/:id`             |
+| **Functional Role-Domain Associations** | `POST /api/functionalRoleDomains`       | `GET /api/functionalRoleDomains/:id`      | X    | `DELETE /api/functionalRoleDomains/:id` |
+
+## 📌 Special Operations (Assignments & Relationships)
+
+| **Operation**                                         | **Endpoint**                                   | **Description** |
+|------------------------------------------------------|-----------------------------------------------|----------------|
+| **Get All Functional Role-Domain Associations**      | `GET /api/functionalRoleDomains`              | Retrieves all Functional Role-Domain associations. |
+| **Assign Application Roles to (FunctionalRole, Domain)** | `POST /api/functionalRoleDomains/:id/applicationRoles` | Assigns Application Roles (Task Roles) to a Functional Role-Domain association. |
+| **Assign Data Roles to (FunctionalRole, Domain)**    | `POST /api/functionalRoleDomains/:id/dataRoles` | Assigns Data Roles to a Functional Role-Domain association. |
+| **Get Application Roles for (FunctionalRole, Domain)** | `GET /api/functionalRoleDomains/:id/applicationRoles` | Retrieves all Application Roles assigned to a Functional Role-Domain pair. |
+| **Get Data Roles for (FunctionalRole, Domain)**      | `GET /api/functionalRoleDomains/:id/dataRoles` | Retrieves all Data Roles assigned to a Functional Role-Domain pair. |
+| **Assign Entity Types to a Domain**                  | `POST /api/domains/:id/entityTypes`           | Assigns multiple Entity Types to a Domain (accepts an array of UUIDs). |
+| **Get Entity Types for a Domain**                    | `GET /api/domains/:id/entityTypes`            | Retrieves all Entity Types assigned to a Domain. |
+| **Remove All Entity Types from a Domain**            | `DELETE /api/domains/:id/entityTypes`         | Removes all Entity Types assigned to a Domain. |
+| **Get Access Rights**                                | `POST /api/getAccessRights`            | Returns Application Roles, Data Roles, and Entity Types for a set of `(FunctionalRole, Domain)` pairs. |
+
+
 
 
 # ✅ Running Tests

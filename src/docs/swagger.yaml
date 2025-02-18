@@ -459,6 +459,22 @@ paths:
       responses:
         '201':
           description: Association (Functional Role, Domain) created
+    
+    delete:
+      summary: Delete a Functional Role-Domain Association
+      operationId: deleteFunctionalRoleDomain
+      tags:
+        - Functional Role-Domain Association
+      parameters:
+        - in: path
+          name: functionalRoleDomainId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: Functional Role-Domain association deleted
 
   /functionalRoleDomains/{functionalRoleDomainId}/taskRoles:
     post:
