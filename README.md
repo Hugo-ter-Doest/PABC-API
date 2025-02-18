@@ -13,7 +13,7 @@ The API implements this information model:
 ![Informatiomodel](./images/PABC-informatiemodel.drawio.png)
 
 
-# ⚡ **Features**
+# Features
 ✔ **Manage Functional Roles** (`Create`, `Read`, `Update`, `Delete`)  
 ✔ **Manage Task Roles** (`Create`, `Read`, `Update`, `Delete`)  
 ✔ **Assign Task Roles to Functional Roles**  
