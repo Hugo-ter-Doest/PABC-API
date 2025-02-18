@@ -77,7 +77,7 @@ Overview of available operations:
 | **Data Roles**                      | `POST /api/dataRoles`                   | `GET /api/dataRoles/:id`                  | `PUT /api/dataRoles/:id`                | `DELETE /api/dataRoles/:id`             |
 | **Functional Role-Domain Associations** | `POST /api/functionalRoleDomains`       | `GET /api/functionalRoleDomains/:id`      | X    | `DELETE /api/functionalRoleDomains/:id` |
 
-## 📌 Special Operations (Assignments & Relationships)
+## Additional Operations (Assignments & Relationships)
 
 | **Operation**                                         | **Endpoint**                                   | **Description** |
 |------------------------------------------------------|-----------------------------------------------|----------------|
