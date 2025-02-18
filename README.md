@@ -3,17 +3,17 @@
 This API provides a **structured authorization model** for fine-grained role-based access (RBAC) to resources involved in Zaakgericht Werken (ZGW). It will serve as a Policy Information Point (PIP) in the context of a Policy Based Access Control (PBAC) architecture.
 
 The model is based on the following information:
-- **Functional Roles** are assigned **Task Roles**.  
-- **Functional Roles** have access to **Domains**.  
-- **Domains** consist of **Entity Types**.  
+- **Functional Roles** are associated to **Domains**, i.e. form pairs.
+- **Application Roles** are assigned to pairs of **(Functional Role, Domain)**.
+- **Domains** consist of **Entity Types**. In the first use case Entity Types are restricted to Zaaktypes.
 - **If a Functional Role has access to a Domain, its Task Roles inherit access to that Domain's Entity Types.**  
 
 The API implements this information model:
 
 ![Informatiomodel](./images/PABC-informatiemodel.drawio.png)
----
 
-## ⚡ **Features**
+
+# ⚡ **Features**
 ✔ **Manage Functional Roles** (`Create`, `Read`, `Update`, `Delete`)  
 ✔ **Manage Task Roles** (`Create`, `Read`, `Update`, `Delete`)  
 ✔ **Assign Task Roles to Functional Roles**  
@@ -23,7 +23,7 @@ The API implements this information model:
 
 ---
 
-# 🚀 **Installation Guide**
+# Installation Guide
 ### **1️⃣ Clone the Repository**
 ```bash
 git clone https://github.com/yourusername/authorization-api.git
@@ -62,11 +62,11 @@ or
 npm start:prod
 ```
 
-# 🔌 **API Usage**
+# API Usage
 
 Overview of available operations:
 
-## 📌 CRUD Operations on Base Resources
+## CRUD Operations on Base Resources
 
 | **Resource**                      | **Create (C)**                          | **Read (R)**                              | **Update (U)**                          | **Delete (D)**                          |
 |------------------------------------|-----------------------------------------|-------------------------------------------|-----------------------------------------|-----------------------------------------|
