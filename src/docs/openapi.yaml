@@ -616,6 +616,10 @@ components:
           format: uuid
         name:
           type: string
+          required: true
+        application:
+          type: string
+          required: true
 
     CreateFunctionalRole:
       type: object
@@ -623,6 +627,8 @@ components:
         - name
       properties:
         name:
+          type: string
+        application:
           type: string
 
     ApplicationRole:
