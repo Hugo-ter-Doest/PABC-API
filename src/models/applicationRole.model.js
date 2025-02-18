@@ -5,12 +5,17 @@ const ApplicationRole = sequelize.define("ApplicationRole", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
-    primaryKey: true,
+    primaryKey: true
   },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
+    unique: true
+  },
+  application: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: false  
   },
 });
 
