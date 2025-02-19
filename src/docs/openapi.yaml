@@ -583,6 +583,7 @@ paths:
                   type: array
                   items:
                     type: string
+                    format: uuid
                   description: List of functional role IDs
       responses:
         200:
