@@ -106,7 +106,7 @@ curl -X POST http://localhost:5000/api/access/getAccessRights \
   {
     "functionalRoleDomainId": "0d0c7c7b-f2b1-4380-95cb-695b815c8953",
     "functionalRole": {
-      "id": "eddf5aa5-fc9d-4080-bebd-3aadde96aa75",
+      "id": "a1b2c3d4-5678-9abc-def0-1234567890ab",
       "name": "Medewerker Vergunningen"
     },
     "domain": {
