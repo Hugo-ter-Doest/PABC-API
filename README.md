@@ -85,7 +85,6 @@ Overview of available operations:
 | **Operation**                                         | **Endpoint**                                   | **Description** |
 |------------------------------------------------------|-----------------------------------------------|----------------|
 | **Assign Application Roles to (FunctionalRole, Domain)** | `POST /api/functionalRoleDomains/:id/applicationRoles` | Assigns Application Roles (Task Roles) to a Functional Role-Domain association. |
-| **Assign Data Roles to (FunctionalRole, Domain)**    | `POST /api/functionalRoleDomains/:id/dataRoles` | Assigns Data Roles to a Functional Role-Domain association. |
 | **Get Application Roles for (FunctionalRole, Domain)** | `GET /api/functionalRoleDomains/:id/applicationRoles` | Retrieves all Application Roles assigned to a Functional Role-Domain pair. |
 | **Get Data Roles for (FunctionalRole, Domain)**      | `GET /api/functionalRoleDomains/:id/dataRoles` | Retrieves all Data Roles assigned to a Functional Role-Domain pair. |
 | **Assign Entity Types to a Domain**                  | `POST /api/domains/:id/entityTypes`           | Assigns multiple Entity Types to a Domain (accepts an array of UUIDs). |
