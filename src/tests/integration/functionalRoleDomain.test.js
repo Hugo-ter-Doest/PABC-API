@@ -124,7 +124,7 @@ describe("Functional Role-Domain Associations API", () => {
       expect(response.status).toBe(200)
       expect(response.body.length).toBeGreaterThan(0) // Ensure at least one result
 
-      // console.log("Response Body:", JSON.stringify(response.body, null, 2))
+      console.log("Response Body:", JSON.stringify(response.body, null, 2))
 
       const result = response.body[0] // Get first result
       expect(result).toHaveProperty("applicationRoles")

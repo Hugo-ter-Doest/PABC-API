@@ -12,6 +12,9 @@ The API implements this information model:
 
 ![Informatiomodel](./images/PABC-informatiemodel.drawio.png)
 
+Here are links to inspect the API:
+- [Redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
+- [Swagger](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
 
 # Features
 ✔ **Manage Functional Roles** (`Create`, `Read`, `Update`, `Delete`)  
@@ -93,9 +96,45 @@ Overview of available operations:
 
 The last operation in the table is the main call for clients like ZAC and KISS, or their PDP if you decide to delegate that. The input for the call is a list of functional roles and the output is a list of (list of application roles, list of entity types). The meaning of each pair (list of application roles, list of entity types) is that the application roles are allowed to use the entity types.
 
-Here are links to inspect the API:
-- [Redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
-- [Swagger](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
+```bash
+curl -X POST http://localhost:5000/api/access/getAccessRights \
+     -H "Content-Type: application/json" \
+     -d '{
+           "functionalRoleIds": ["a1b2c3d4-5678-9abc-def0-1234567890ab"]
+         }'
+```
+
+```json
+[
+  {
+    "functionalRoleDomainId": "0d0c7c7b-f2b1-4380-95cb-695b815c8953",
+    "functionalRole": {
+      "id": "eddf5aa5-fc9d-4080-bebd-3aadde96aa75",
+      "name": "Medewerker Vergunningen"
+    },
+    "domain": {
+      "id": "7b146694-c199-4796-ae97-5244bc903d58",
+      "name": "Fysiek domein"
+    },
+    "applicationRoles": [
+      {
+        "id": "703b4fa2-39cd-4b78-b31e-bf37000c1971",
+        "name": "Zaak behandelen"
+      }
+    ],
+    "entityTypes": [
+      {
+        "id": "1b72e021-e186-40be-8c26-0ab92b610393",
+        "name": "Zaaktype Sloop"
+      },
+      {
+        "id": "e408fac5-bf0f-45b7-b3b1-f23576ceec53",
+        "name": "Zaaktype Bouwvergunning"
+      }
+    ]
+  }
+]
+```	
 
 # Running Tests
 To run the tests, navigate to the root directory of the repository and run the following command:
