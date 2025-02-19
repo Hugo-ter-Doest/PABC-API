@@ -84,7 +84,6 @@ Overview of available operations:
 
 | **Operation**                                         | **Endpoint**                                   | **Description** |
 |------------------------------------------------------|-----------------------------------------------|----------------|
-| **Get All Functional Role-Domain Associations**      | `GET /api/functionalRoleDomains`              | Retrieves all Functional Role-Domain associations. |
 | **Assign Application Roles to (FunctionalRole, Domain)** | `POST /api/functionalRoleDomains/:id/applicationRoles` | Assigns Application Roles (Task Roles) to a Functional Role-Domain association. |
 | **Assign Data Roles to (FunctionalRole, Domain)**    | `POST /api/functionalRoleDomains/:id/dataRoles` | Assigns Data Roles to a Functional Role-Domain association. |
 | **Get Application Roles for (FunctionalRole, Domain)** | `GET /api/functionalRoleDomains/:id/applicationRoles` | Retrieves all Application Roles assigned to a Functional Role-Domain pair. |
