@@ -153,17 +153,31 @@ exports.getAllowedApplicationRolesAndEntityTypes = async (req, res) => {
         },
       ],
     })
-
-    // console.log('functionalRoleDomains: ', functionalRoleDomains)
+    // console.log('functionalRoleDomains: ', JSON.stringify(functionalRoleDomains, null, 2))
 
     // let results = []
     // Transform the data into a list of objects with application roles and entity types
     result = functionalRoleDomains.map((frd) => {
-      // console.log('Inside the map for functionalRoleDomains: ', frd)
-      // console.log('Domain: ', frd.Domain)
       return {
-        applicationRoles: frd.ApplicationRoles ?? [], // Ensure it's always an array
-        entityTypes: frd.Domain.EntityTypes ?? []
+        functionalRoleDomainId: frd.id,
+        functionalRole: frd.FunctionalRole,
+        domain: {
+          id: frd.Domain.id,
+          name: frd.Domain.name,
+        },
+        applicationRoles: frd.ApplicationRoles ? frd.ApplicationRoles.map((ar) => {
+          return {
+            id: ar.id,
+            name: ar.name,
+            application: ar.application
+          }
+        }) : [],        
+        entityTypes: frd.Domain.EntityTypes ? frd.Domain.EntityTypes.map((et) => {
+          return {
+            id: et.id,
+            name: et.name,
+          }
+        }) : [],      
       }
     })
 

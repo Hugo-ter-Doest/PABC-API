@@ -91,6 +91,8 @@ Overview of available operations:
 | **Remove All Entity Types from a Domain**            | `DELETE /api/domains/:id/entityTypes`         | Removes all Entity Types assigned to a Domain. |
 | **Get Access Rights**                                | `POST /api/getAccessRights`            | Returns Application Roles, Data Roles, and Entity Types for a set of `(FunctionalRole, Domain)` pairs. |
 
+The last operation in the table is the main call for clients like ZAC and KISS, or their PDP if you decide to delegate that. The input for the call is a list of functional roles and the output is a list of (list of application roles, list of entity types). The meaning of each pair (list of application roles, list of entity types) is that the application roles are allowed to use the entity types.
+
 Here are links to inspect the API:
 - [Redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
 - [Swagger](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
