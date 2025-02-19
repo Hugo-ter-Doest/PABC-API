@@ -115,7 +115,7 @@ For development you can run the development server:
 npm run start:dev
 ```
 
-It starts the server with `nodemon` which restarts the server with every change.
+It starts the server with `nodemon` which restarts the server with every code change.
 
 # Production
 For production the server is started as follows:
