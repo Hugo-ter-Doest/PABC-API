@@ -103,7 +103,8 @@ npm run test
 ```
 Tested Features: 
 - CRUD operations for Functional Roles, Task Roles, Domains, Entity Types
-- Assigning Task Roles to Functional Roles
+- Associating Functional Roles with Domains
+- Assigning Application Roles to (Functional Role, Domain) pairs
 - Assigning Entity Types to Domains
 - Querying relationships between entities
 
