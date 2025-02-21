@@ -13,8 +13,8 @@ The API implements this information model:
 ![Informatiomodel](./images/PABC-informatiemodel.drawio.png)
 
 Here are links to inspect the API:
-- [Redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
-- [Swagger](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/src/docs/openapi.yaml)
+- [Redoc](https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/docs/openapi.yaml)
+- [Swagger](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/Hugo-ter-Doest/PABC-API/main/docs/openapi.yaml)
 
 # Features
 ✔ **Manage Functional Roles** (`Create`, `Read`, `Update`, `Delete`)  
