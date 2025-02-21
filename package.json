@@ -13,7 +13,11 @@
   },
   "keywords": [
     "PBAC",
+    "Policy Based Access Control",
+    "RBAC",
+    "Role Based Access Control",
     "PIP",
+    "Policy Information Point",
     "Policies",
     "Zaakgericht Werken"
   ],
