@@ -56,7 +56,7 @@ To start up Postgres and pgAdmin you can use Docker Compose:
 docker-compose up -d
 ```
 
-If you add `--profile api` to the command, it will also start the API server.
+If you add `--profile api` to the command, it will build the Docker container of the API server and start it.
 
 ### **5️⃣ Start the API**
 ```bash
