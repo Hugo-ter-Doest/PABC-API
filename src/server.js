@@ -1,4 +1,5 @@
 // require("dotenv").config()
+const cors = require("cors")
 const express = require("express")
 const setupSwagger = require("./swagger")
 const sequelize = require("./config/db")
@@ -11,6 +12,7 @@ const functionalRoleDomainRoutes = require("./routes/functionalRoleDomain.routes
 require("dotenv-flow").config()
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 setupSwagger(app)
 
