@@ -51,6 +51,22 @@ describe("Functional Role-Domain Associations API", () => {
     })
   })
 
+  // Add test for deleting a functional role domain pair
+  describe("DELETE /api/functionalRoleDomains/:id", () => {
+    it("should delete a functional role domain pair", async () => {
+      const functionalRoleDomain = await FunctionalRoleDomain.create({
+        functionalRoleId: functionalRole.id,
+        domainId: domain.id,
+      });
+
+      const response = await request(app)
+        .delete(`/api/functionalRoleDomains/${functionalRoleDomain.id}`);
+
+      expect(response.status).toBe(204);
+      expect(await FunctionalRoleDomain.findByPk(functionalRoleDomain.id)).toBeNull();
+    });
+  });
+
   describe("GET /api/functionalRoleDomains", () => {
     it("should retrieve all Functional Role-Domain associations", async () => {
       const response = await request(app).get(`/api/functionalRoleDomains`)
@@ -124,7 +140,7 @@ describe("Functional Role-Domain Associations API", () => {
       expect(response.status).toBe(200)
       expect(response.body.length).toBeGreaterThan(0) // Ensure at least one result
 
-      console.log("Response Body:", JSON.stringify(response.body, null, 2))
+      // console.log("Response Body:", JSON.stringify(response.body, null, 2))
 
       const result = response.body[0] // Get first result
       expect(result).toHaveProperty("applicationRoles")
