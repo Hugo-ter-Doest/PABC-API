@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   title: PodiumD Authorization API
-  description: API for managing Functional Roles, Application Roles, Domains, and Entity Types with full CRUD and relationship support.
+  description: API for managing access rights based on (functional and application) roles and domains that give access to entity types.
   version: 1.0.0
 servers:
   - url: http://localhost:5000/api
@@ -464,6 +464,7 @@ components:
         name:
           type: string
           required: true
+          description: Unique name of the Functional Role
 
     ApplicationRole:
       type: object
@@ -471,8 +472,10 @@ components:
         name:
           type: string
           required: true
+          description: Unique name of the Application Role
         application:
           type: string
+          description: Name of the application that is the source of the application role
 
     Domain:
       type: object
@@ -480,14 +483,18 @@ components:
         id:
           type: string
           format: uuid
+          description: Unique identifier of the domain
         name:
           type: string
-        omschrijving:
+          description: Name of the domain
+        description:
           type: string
+          description: Description of the domain
         entityTypes:
           type: array
           items:
             $ref: '#/components/schemas/EntityType'
+          description: List of entity types that are assigned to the domain
 
     CreateDomain:
       type: object
@@ -496,8 +503,10 @@ components:
       properties:
         name:
           type: string
+          description: Name of the domain
         omschrijving:
           type: string
+          description: Description of the domain
 
     EntityType:
       type: object
@@ -505,11 +514,14 @@ components:
         id:
           type: string
           format: uuid
+          description: Unique identifier of the entity type
         type:
           type: enum
           enum: [zaaktype]
+          description: Type of the entity type. For now only zaaktype is supported. Later other entity types can be added.
         uri:
           type: uri
+          description: URI of the entity type pointing to the zaaktype in the zaaktypecatalogus.
 
     CreateEntityType:
       type: object
@@ -518,6 +530,7 @@ components:
       properties:
         name:
           type: string
+          description: Name of the entity type
 
     FunctionalRoleDomain:
       type: object
@@ -525,20 +538,25 @@ components:
         id:
           type: string
           format: uuid
+          description: Unique identifier of the Functional Role-Domain Association
         functionalRoleName:
           type: string
+          description: Name of the Functional Role
         domainId:
           type: string
           format: uuid
+          description: Unique identifier of the Domain
 
     CreateFunctionalRoleDomain:
       type: object
       properties:
         functionalRoleName:
           type: string
+          description: Name of the Functional Role
         domainId:
           type: string
           format: uuid
+          description: Unique identifier of the Domain
 
     EntityTypesPerApplicationRole:
       type: array
@@ -547,10 +565,12 @@ components:
         properties:
           applicationRoleName:
             type: string
+            description: Name of the Application Role
           entityTypes:
             type: array
             items:
               $ref: '#/components/schemas/EntityType'
+            description: List of entity types
 
     ApplicationRolesPerEntityType:
       type: array
@@ -560,7 +580,9 @@ components:
           entityTypeId:
             type: string
             format: uuid
+            description: Unique identifier of the Entity Type
           applicationRoles:
             type: array
             items:
               $ref: '#/components/schemas/ApplicationRole'
+            description: List of application roles
