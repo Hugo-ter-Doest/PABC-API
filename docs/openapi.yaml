@@ -12,6 +12,7 @@ paths:
   # Functional Role Endpoints
   ############################
   /functionalRoles:
+    description: Collection of functional roles, which are the basis for authorisation of employees. The source of functional roles is KeyCloak with which the roles are synchronised. If configured as such the identity provider of the municipality. Functional roles cannot be maintained through the API.
     get:
       summary: Get all Functional Roles
       tags:
@@ -30,6 +31,7 @@ paths:
   # Application Role Endpoints
   ############################
   /applicationRoles:
+    description: Collection of application roles, which are the basis for authorisation within an application. The source of application roles are the application.
     get:
       summary: Get all Application Roles
       tags:
@@ -48,6 +50,7 @@ paths:
   # Domain Endpoints
   ############################
   /domains:
+    description: Collection of domains, which are the basis for authorisation of entity types. PABC is the source of domains and these can maintained through the API. 
     get:
       summary: Get all Domains
       tags:
@@ -162,6 +165,7 @@ paths:
   # Entity Type Endpoints
   ############################
   /entityTypes:
+    description: Collection of entity types, which give access to specific entity types like zaaktypes. PABC is the source of entity types but refers to the actual resource definitions in other registries like OpenZaak. Entity types can be maintained through the API.
     get:
       summary: Get all Entity Types
       tags:
@@ -278,6 +282,7 @@ paths:
   # FunctionalRoleDomains
   ############################
   /functionalRoleDomains:
+    description: Collection of Functional Role-Domain associations. PABC is the source for these associations and therefore these can be maintained through the API.
     get:
       summary: Get all Functional Role-Domain associations
       operationId: getFunctionalRoleDomains
@@ -402,11 +407,11 @@ paths:
   # This is the main calls for clients to get all access rights either per application role or per entity type
   ################################
   /getEntityTypesPerApplicationRole:
+    description: Returns a list of objects, where each object contains an application role and a list of allowed entity types for that application role.
     post:
       tags:
         - getEntityTypesPerApplicationRole
       summary: Get allowed entity types per application role for a list of functional roles
-      description: Returns a list of objects, where each object contains an application role and a list of allowed entity types for that application role.
       requestBody:
         required: true
         content:
@@ -428,11 +433,11 @@ paths:
                 $ref: "#/components/schemas/EntityTypesPerApplicationRole"
 
   /getApplicationRolesPerEntityType:
+    description: Returns a list of objects, where each object contains an application role and a list of allowed application roles for that entity type.
     post:
       tags:
         - getApplicationRolesPerEntityType
       summary: Get allowed application roles per entity type for a list of functional roles
-      description: Returns a list of objects, where each object contains an application role and a list of allowed application roles for that entity type.
       requestBody:
         required: true
         content:
