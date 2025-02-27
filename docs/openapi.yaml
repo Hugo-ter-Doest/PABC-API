@@ -407,11 +407,11 @@ paths:
   # This is the main calls for clients to get all access rights either per application role or per entity type
   ################################
   /getEntityTypesPerApplicationRole:
-    description: Returns a list of objects, where each object contains an application role and a list of allowed entity types for that application role.
     post:
       tags:
         - getEntityTypesPerApplicationRole
       summary: Get allowed entity types per application role for a list of functional roles
+      description: Returns a list of objects, where each object contains an application role and a list of allowed entity types for that application role.
       requestBody:
         required: true
         content:
@@ -433,11 +433,11 @@ paths:
                 $ref: "#/components/schemas/EntityTypesPerApplicationRole"
 
   /getApplicationRolesPerEntityType:
-    description: Returns a list of objects, where each object contains an application role and a list of allowed application roles for that entity type.
     post:
       tags:
         - getApplicationRolesPerEntityType
       summary: Get allowed application roles per entity type for a list of functional roles
+      description: Returns a list of objects, where each object contains an application role and a list of allowed application roles for that entity type.
       requestBody:
         required: true
         content:
