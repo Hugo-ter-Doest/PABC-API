@@ -422,9 +422,8 @@ paths:
           description: List of allowed entity types per application role
           content:
             application/json:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/EntityTypesPerApplicationRole"
+              schema:
+                $ref: "#/components/schemas/EntityTypesPerApplicationRole"
 
   /getApplicationRolesPerEntityType:
     post:
@@ -450,9 +449,8 @@ paths:
           description: List of allowed application roles per entity type
           content:
             application/json:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/ApplicationRolesPerEntityType"
+              schema:
+                $ref: "#/components/schemas/ApplicationRolesPerEntityType"
 
 ############################
 # Components
@@ -561,8 +559,9 @@ components:
       items:
         type: object
         properties:
-          entityType:
-            $ref: '#/components/schemas/EntityType'
+          entityTypeId:
+            type: string
+            format: uuid
           applicationRoles:
             type: array
             items:
