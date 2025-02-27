@@ -344,13 +344,12 @@ paths:
             schema:
               type: object
               properties:
-                applicationRoleIds:
+                applicationRoleNames:
                   type: array
                   items:
                     type: string
-                    format: uuid
               required:
-                - applicationRoleIds
+                - applicationRoleNames
       responses:
         "200":
           description: Application Roles successfully assigned to Functional Role-Domain Association
@@ -542,9 +541,8 @@ components:
       items:
         type: object
         properties:
-          applicationRoleId:
+          applicationRoleName:
             type: string
-            format: uuid
           entityTypes:
             type: array
             items:
