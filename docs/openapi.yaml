@@ -411,11 +411,10 @@ paths:
             schema:
               type: object
               properties:
-                functionalRoleIds:
+                functionalRoleNames:
                   type: array
                   items:
                     type: string
-                    format: uuid
                   description: List of functional role IDs
       responses:
         200:
@@ -438,11 +437,10 @@ paths:
             schema:
               type: object
               properties:
-                functionalRoleIds:
+                functionalRoleNames:
                   type: array
                   items:
                     type: string
-                    format: uuid
                   description: List of functional role IDs
       responses:
         200:
@@ -554,7 +552,7 @@ components:
             items:
               $ref: '#/components/schemas/EntityType'
 
-    ApplicationRolePerEntityType:
+    ApplicationRolesPerEntityType:
       type: array
       items:
         type: object
