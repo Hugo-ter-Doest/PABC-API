@@ -308,8 +308,9 @@ paths:
         '201':
           description: Association (Functional Role, Domain) created
           content:
-            schema:
-              $ref: "#/components/schemas/FunctionalRoleDomain"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FunctionalRoleDomain"
   
     delete:
       summary: Delete a Functional Role-Domain Association
