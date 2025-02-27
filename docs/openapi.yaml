@@ -521,7 +521,7 @@ components:
           description: Type of the entity type. For now only zaaktype is supported. Later other entity types can be added.
         uri:
           type: uri
-          description: URI of the entity type pointing to the zaaktype in the zaaktypecatalogus.
+          description: URI of the entity type pointing to the resource of the entity type in another registry.
 
     CreateEntityType:
       type: object
