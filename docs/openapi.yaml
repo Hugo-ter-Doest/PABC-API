@@ -522,9 +522,8 @@ components:
         id:
           type: string
           format: uuid
-        functionalRoleId:
+        functionalRoleName:
           type: string
-          format: uuid
         domainId:
           type: string
           format: uuid
@@ -532,9 +531,8 @@ components:
     CreateFunctionalRoleDomain:
       type: object
       properties:
-        functionalRoleId:
+        functionalRoleName:
           type: string
-          format: uuid
         domainId:
           type: string
           format: uuid
