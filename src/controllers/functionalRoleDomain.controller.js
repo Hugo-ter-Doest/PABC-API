@@ -42,7 +42,9 @@ exports.createFunctionalRoleDomain = async (req, res) => {
 exports.deleteFunctionalRoleDomain = async (req, res) => {
   try {
     const id = req.params.id
+    console.log(id)
     const association = await FunctionalRoleDomain.findByPk(id)
+    console.log(association)
     if (!association) {
       return res.status(404).json({ error: 'Association not found' })
     }
@@ -54,7 +56,7 @@ exports.deleteFunctionalRoleDomain = async (req, res) => {
   }
 }
 
-/// Get all Functional Role-Domain associations
+// Get all Functional Role-Domain associations
 exports.getAllFunctionalRoleDomains = async (req, res) => {
   try {
     const associations = await FunctionalRoleDomain.findAll({

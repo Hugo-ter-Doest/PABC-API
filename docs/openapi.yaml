@@ -26,75 +26,6 @@ paths:
                 items:
                   $ref: '#/components/schemas/FunctionalRole'
 
-    post:
-      summary: Create a Functional Role
-      tags:
-        - Functional Roles
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateFunctionalRole"
-      responses:
-        '201':
-          description: Functional Role created
-
-  /functionalRoles/{id}:
-    get:
-      summary: Get a Functional Role by Id
-      tags:
-        - Functional Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Functional Role details
-          content:
-            application/json:
-              schema: 
-                $ref: '#/components/schemas/FunctionalRole'
-
-    put:
-      summary: Update a Functional Role
-      tags:
-        - Functional Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateFunctionalRole"
-      responses:
-        '200':
-          description: Functional Role updated
-
-    delete:
-      summary: Delete a Functional Role
-      tags:
-        - Functional Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Functional Role deleted
-
   ############################
   # Application Role Endpoints
   ############################
@@ -112,77 +43,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ApplicationRole'
-
-
-    post:
-      summary: Create a Application Role
-      tags:
-        - Application Roles
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateApplicationRole"
-      responses:
-        '201':
-          description: Application Role created
-
-  /applicationRoles/{id}:
-    get:
-      summary: Get a Application Role
-      tags:
-        - Application Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Get a Application Role by identifier
-          content:
-            application/json:
-              schema: 
-                $ref: '#/components/schemas/ApplicationRole'
-
-    put:
-      summary: Update a Application Role
-      tags:
-        - Application Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateApplicationRole"
-      responses:
-        '200':
-          description: Application Role updated
-
-    delete:
-      summary: Delete a Application Role
-      tags:
-        - Application Roles
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: Application Role deleted
 
   ############################
   # Domain Endpoints
@@ -297,34 +157,6 @@ paths:
       responses:
         '200':
           description: Entity Types assigned successfully
-
-    get:
-      summary: Get Entity Types for a Domain
-      tags:
-        - Domains
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        '200':
-          description: List of Entity Types for the Domain
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                   domainId:
-                    type: string
-                    description: The identifier of the domain
-                   applicationRoles:
-                    type: array
-                    items: 
-                      $ref: '#/components/schemas/EntityType'
-
 
   ############################
   # Entity Type Endpoints
@@ -564,14 +396,14 @@ paths:
                       $ref: "#/components/schemas/ApplicationRole"
 
   ################################
-  # This is the main call for clients to get all access rights
+  # This is the main calls for clients to get all access rights either per application role or per entity type
   ################################
-  /get-access-rights:
+  /getEntityTypesPerApplicationRole:
     post:
       tags:
-        - get-access-rights
-      summary: Get allowed application roles and entity types for a list of functional roles
-      description: Returns a list of objects, where each object contains a list of application roles and a list of entity types.
+        - getEntityTypesPerApplicationRole
+      summary: Get allowed entity types per application role for a list of functional roles
+      description: Returns a list of objects, where each object contains an application role and a list of allowed entity types for that application role.
       requestBody:
         required: true
         content:
@@ -587,22 +419,40 @@ paths:
                   description: List of functional role IDs
       responses:
         200:
-          description: List of allowed application roles and entity types
+          description: List of allowed entity types per application role
           content:
             application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    applicationRoles:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/ApplicationRole'
-                    entityTypes:
-                      type: array
-                      items:
-                        $ref: '#/components/schemas/EntityType'
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/EntityTypesPerApplicationRole"
+
+  /getApplicationRolesPerEntityType:
+    post:
+      tags:
+        - getApplicationRolesPerEntityType
+      summary: Get allowed application roles per entity type for a list of functional roles
+      description: Returns a list of objects, where each object contains an application role and a list of allowed application roles for that entity type.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                functionalRoleIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of functional role IDs
+      responses:
+        200:
+          description: List of allowed application roles per entity type
+          content:
+            application/json:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ApplicationRolesPerEntityType"
 
 ############################
 # Components
@@ -612,39 +462,16 @@ components:
     FunctionalRole:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
         name:
           type: string
           required: true
 
-    CreateFunctionalRole:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-
     ApplicationRole:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
         name:
           type: string
-        application:
-          type: string
-
-    CreateApplicationRole:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
+          required: true
         application:
           type: string
 
@@ -656,6 +483,12 @@ components:
           format: uuid
         name:
           type: string
+        omschrijving:
+          type: string
+        entityTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityType'
 
     CreateDomain:
       type: object
@@ -664,6 +497,8 @@ components:
       properties:
         name:
           type: string
+        omschrijving:
+          type: string
 
     EntityType:
       type: object
@@ -671,8 +506,11 @@ components:
         id:
           type: string
           format: uuid
-        name:
-          type: string
+        type:
+          type: enum
+          enum: [zaaktype]
+        uri:
+          type: uri
 
     CreateEntityType:
       type: object
@@ -704,3 +542,28 @@ components:
         domainId:
           type: string
           format: uuid
+
+    EntityTypesPerApplicationRole:
+      type: array
+      items:
+        type: object
+        properties:
+          applicationRoleId:
+            type: string
+            format: uuid
+          entityTypes:
+            type: array
+            items:
+              $ref: '#/components/schemas/EntityType'
+
+    ApplicationRolePerEntityType:
+      type: array
+      items:
+        type: object
+        properties:
+          entityType:
+            $ref: '#/components/schemas/EntityType'
+          applicationRoles:
+            type: array
+            items:
+              $ref: '#/components/schemas/ApplicationRole'
