@@ -113,11 +113,13 @@ curl -X POST http://localhost:5000/api/access/getEntityTypesPerApplicationRole \
     "entityTypes": [
       {
         "id": "1b72e021-e186-40be-8c26-0ab92b610393",
-        "name": "Zaaktype Sloop"
+        "type": "zaaktype",	
+        "uri": "uri to a zaaktype in OpenZaak"
       },
       {
         "id": "e408fac5-bf0f-45b7-b3b1-f23576ceec53",
-        "name": "Zaaktype Bouwvergunning"
+        "type": "zaaktype",	
+        "uri": "uri to a zaaktype in OpenZaak"
       }
     ]
   },
