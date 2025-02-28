@@ -76,11 +76,11 @@ Functional roles and application roles cannot be manipulated through the API sin
 
 | **Resource**                      | **Create (C)**                          | **Read (R)**                              | **Update (U)**                          | **Delete (D)**                          |
 |------------------------------------|-----------------------------------------|-------------------------------------------|-----------------------------------------|-----------------------------------------|
-| **Functional Roles**               | X             | `GET /api/functionalRoles`            | X          | X       |
+| **Functional Roles**               | ❌             | `GET /api/functionalRoles`            | ❌          | X       |
 | **Domains**                        | `POST /api/domains`                     | `GET /api/domains/:id`                    | `PUT /api/domains/:id`                  | `DELETE /api/domains/:id`               |
 | **Entity Types**                   | `POST /api/entityTypes`                 | `GET /api/entityTypes/:id`                | `PUT /api/entityTypes/:id`              | `DELETE /api/entityTypes/:id`           |
-| **Application Roles (Task Roles)**  | X            | `GET /api/applicationRoles`           | X         | X      |
-| **Functional Role-Domain Associations** | `POST /api/functionalRoleDomains`       | `GET /api/functionalRoleDomains/:id`      | X    | `DELETE /api/functionalRoleDomains/:id` |
+| **Application Roles (Task Roles)**  | ❌            | `GET /api/applicationRoles`           | ❌         | X      |
+| **Functional Role-Domain Associations** | `POST /api/functionalRoleDomains`       | `GET /api/functionalRoleDomains/:id`      | ❌    | `DELETE /api/functionalRoleDomains/:id` |
 
 ## Additional Operations (Assignments & Relationships)
 
