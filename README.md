@@ -94,7 +94,7 @@ Functional roles and application roles cannot be manipulated through the API sin
 | **Get Application Roles per Entity Type**                                | `POST /api/getApplicationRolesPerEntityType`            | Returns a mapping of entity types to application roles |
 | **Get Entity Types per Application Role**                                | `POST /api/getEntityTypesPerApplicationRole`            | Returns a mapping of application roles to entity types |
 
-The last operation in the table is the main call for clients like ZAC and KISS, or their PDP if you decide to delegate that. The input for the call is a list of functional roles and the output is a list of (list of application roles, list of entity types). The meaning of each pair (list of application roles, list of entity types) is that the application roles are allowed to use the entity types.
+The last two operations in the table are the main calls for clients like ZAC and KISS, or their PDP if you decide to delegate that. The input for the call is a list of functional roles and the output is a list of (list of application roles, list of entity types). The meaning of each pair (list of application roles, list of entity types) is that the application roles are allowed to use the entity types.
 
 ```bash
 curl -X POST http://localhost:5000/api/access/getEntityTypesPerApplicationRole \
