@@ -72,14 +72,14 @@ npm start:prod
 Overview of available operations:
 
 ## CRUD Operations on Base Resources
+Functional roles and application roles cannot be manipulated through the API since PABC is not the source of these roles. Functional roles are synchronised with KeyCloak, and application roles with (frontend) applications (like ZAC and KISS).
 
 | **Resource**                      | **Create (C)**                          | **Read (R)**                              | **Update (U)**                          | **Delete (D)**                          |
 |------------------------------------|-----------------------------------------|-------------------------------------------|-----------------------------------------|-----------------------------------------|
-| **Functional Roles**               | `POST /api/functionalRoles`             | `GET /api/functionalRoles/:id`            | `PUT /api/functionalRoles/:id`          | `DELETE /api/functionalRoles/:id`       |
+| **Functional Roles**               | X             | `GET /api/functionalRoles`            | X          | X       |
 | **Domains**                        | `POST /api/domains`                     | `GET /api/domains/:id`                    | `PUT /api/domains/:id`                  | `DELETE /api/domains/:id`               |
 | **Entity Types**                   | `POST /api/entityTypes`                 | `GET /api/entityTypes/:id`                | `PUT /api/entityTypes/:id`              | `DELETE /api/entityTypes/:id`           |
-| **Application Roles (Task Roles)**  | `POST /api/applicationRoles`            | `GET /api/applicationRoles/:id`           | `PUT /api/applicationRoles/:id`         | `DELETE /api/applicationRoles/:id`      |
-| **Data Roles**                      | `POST /api/dataRoles`                   | `GET /api/dataRoles/:id`                  | `PUT /api/dataRoles/:id`                | `DELETE /api/dataRoles/:id`             |
+| **Application Roles (Task Roles)**  | X            | `GET /api/applicationRoles`           | X         | X      |
 | **Functional Role-Domain Associations** | `POST /api/functionalRoleDomains`       | `GET /api/functionalRoleDomains/:id`      | X    | `DELETE /api/functionalRoleDomains/:id` |
 
 ## Additional Operations (Assignments & Relationships)
@@ -91,36 +91,25 @@ Overview of available operations:
 | **Assign Entity Types to a Domain**                  | `POST /api/domains/:id/entityTypes`           | Assigns multiple Entity Types to a Domain (accepts an array of UUIDs). |
 | **Get Entity Types for a Domain**                    | `GET /api/domains/:id/entityTypes`            | Retrieves all Entity Types assigned to a Domain. |
 | **Remove All Entity Types from a Domain**            | `DELETE /api/domains/:id/entityTypes`         | Removes all Entity Types assigned to a Domain. |
-| **Get Access Rights**                                | `POST /api/getAccessRights`            | Returns Application Roles, Data Roles, and Entity Types for a set of `(FunctionalRole, Domain)` pairs. |
+| **Get Application Roles per Entity Type**                                | `POST /api/getApplicationRolesPerEntityType`            | Returns a mapping of entity types to application roles |
+| **Get Entity Types per Application Role**                                | `POST /api/getEntityTypesPerApplicationRole`            | Returns a mapping of application roles to entity types |
 
 The last operation in the table is the main call for clients like ZAC and KISS, or their PDP if you decide to delegate that. The input for the call is a list of functional roles and the output is a list of (list of application roles, list of entity types). The meaning of each pair (list of application roles, list of entity types) is that the application roles are allowed to use the entity types.
 
 ```bash
-curl -X POST http://localhost:5000/api/access/getAccessRights \
+curl -X POST http://localhost:5000/api/access/getEntityTypesPerApplicationRole \
      -H "Content-Type: application/json" \
      -d '{
-           "functionalRoleIds": ["a1b2c3d4-5678-9abc-def0-1234567890ab"]
+           "functionalRoleNames": ["Medewerker Vergunningen"]
          }'
 ```
 
 ```json
 [
   {
-    "functionalRoleDomainId": "0d0c7c7b-f2b1-4380-95cb-695b815c8953",
-    "functionalRole": {
-      "id": "a1b2c3d4-5678-9abc-def0-1234567890ab",
-      "name": "Medewerker Vergunningen"
-    },
-    "domain": {
-      "id": "7b146694-c199-4796-ae97-5244bc903d58",
-      "name": "Fysiek domein"
-    },
-    "applicationRoles": [
-      {
-        "id": "703b4fa2-39cd-4b78-b31e-bf37000c1971",
+    "applicationRole": {
         "name": "Zaak behandelen"
-      }
-    ],
+    },
     "entityTypes": [
       {
         "id": "1b72e021-e186-40be-8c26-0ab92b610393",
@@ -130,6 +119,14 @@ curl -X POST http://localhost:5000/api/access/getAccessRights \
         "id": "e408fac5-bf0f-45b7-b3b1-f23576ceec53",
         "name": "Zaaktype Bouwvergunning"
       }
+    ]
+  },
+  {
+    "applicationRole": {
+      "name": "Zaak lezen"
+    },
+    "entityTypes": [
+      ...
     ]
   }
 ]
