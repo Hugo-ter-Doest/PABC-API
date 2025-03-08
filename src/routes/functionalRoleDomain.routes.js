@@ -6,7 +6,9 @@ const {
   getAllFunctionalRoleDomains,
   assignApplicationRolesToFunctionalRoleDomain,
   getApplicationRolesForFunctionalRoleDomain,
-  getAllowedApplicationRolesAndEntityTypes
+  getAllowedApplicationRolesAndEntityTypes,
+  getEntityTypesPerApplicationRole,
+  getApplicationRolesPerEntityType
 } = require("../controllers/functionalRoleDomain.controller")
 
 // Create a Functional Role-Domain association
@@ -24,5 +26,9 @@ router.post("/:functionalRoleDomainId/applicationRoles", assignApplicationRolesT
 // Get Task Roles assigned to a Functional Role-Domain association
 router.get("/:functionalRoleDomainId/applicationRoles", getApplicationRolesForFunctionalRoleDomain)
 
+// 🔹 Top-level routes
 router.post("/getAccessRights", getAllowedApplicationRolesAndEntityTypes)
+router.post("/getEntityTypesPerApplicationRole", getEntityTypesPerApplicationRole);
+router.post("/getApplicationRolesPerEntityType", getApplicationRolesPerEntityType);
+
 module.exports = router

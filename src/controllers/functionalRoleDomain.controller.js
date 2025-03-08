@@ -189,3 +189,129 @@ exports.getAllowedApplicationRolesAndEntityTypes = async (req, res) => {
     res.status(500).json({ error: error.message })
   }
 }
+
+exports.getEntityTypesPerApplicationRole = async (req, res) => {
+  try {
+    const { functionalRoleIds } = req.body;
+
+    if (!functionalRoleIds || !Array.isArray(functionalRoleIds) || functionalRoleIds.length === 0) {
+      return res.status(400).json({ error: "functionalRoleIds must be a non-empty array" });
+    }
+
+    const functionalRoleDomains = await FunctionalRoleDomain.findAll({
+      where: {
+        functionalRoleId: {
+          [Op.in]: functionalRoleIds,
+        },
+      },
+      attributes: ["id"],
+      include: [
+        {
+          model: Domain,
+          attributes: ["id", "name"],
+          include: [
+            {
+              model: EntityType,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
+        {
+          model: ApplicationRole,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+
+    const applicationRoleToEntityTypes = new Map();
+
+    for (const frd of functionalRoleDomains) {
+      const entityTypes = frd.Domain?.EntityTypes || [];
+      const applicationRoles = frd.ApplicationRoles || [];
+
+      for (const appRole of applicationRoles) {
+        if (!applicationRoleToEntityTypes.has(appRole.id)) {
+          applicationRoleToEntityTypes.set(appRole.id, {
+            id: appRole.id,
+            name: appRole.name,
+            entityTypes: [],
+          });
+        }
+        entityTypes.forEach((et) => {
+          applicationRoleToEntityTypes.get(appRole.id).entityTypes.push({
+            id: et.id,
+            name: et.name,
+          });
+        });
+      }
+    }
+
+    res.json(Array.from(applicationRoleToEntityTypes.values()));
+  } catch (error) {
+    console.error("Error in getEntityTypesPerApplicationRole:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getApplicationRolesPerEntityType = async (req, res) => {
+  try {
+    const { functionalRoleIds } = req.body;
+
+    if (!functionalRoleIds || !Array.isArray(functionalRoleIds) || functionalRoleIds.length === 0) {
+      return res.status(400).json({ error: "functionalRoleIds must be a non-empty array" });
+    }
+
+    const functionalRoleDomains = await FunctionalRoleDomain.findAll({
+      where: {
+        functionalRoleId: {
+          [Op.in]: functionalRoleIds,
+        },
+      },
+      attributes: ["id"],
+      include: [
+        {
+          model: Domain,
+          attributes: ["id", "name"],
+          include: [
+            {
+              model: EntityType,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
+        {
+          model: ApplicationRole,
+          attributes: ["id", "name"],
+        },
+      ],
+    });
+
+    const entityTypeToApplicationRoles = new Map();
+
+    for (const frd of functionalRoleDomains) {
+      const entityTypes = frd.Domain?.EntityTypes || [];
+      const applicationRoles = frd.ApplicationRoles || [];
+
+      for (const et of entityTypes) {
+        if (!entityTypeToApplicationRoles.has(et.id)) {
+          entityTypeToApplicationRoles.set(et.id, {
+            id: et.id,
+            name: et.name,
+            applicationRoles: [],
+          });
+        }
+        applicationRoles.forEach((appRole) => {
+          entityTypeToApplicationRoles.get(et.id).applicationRoles.push({
+            id: appRole.id,
+            name: appRole.name,
+          });
+        });
+      }
+    }
+
+    res.json(Array.from(entityTypeToApplicationRoles.values()));
+  } catch (error) {
+    console.error("Error in getApplicationRolesPerEntityType:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
