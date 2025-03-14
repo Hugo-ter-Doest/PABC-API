@@ -5,7 +5,7 @@ const { app } = require("../../server") // Import app, not starting a new server
 require("./setupTestDB")
 
 describe("Application Role API", () => {
-  let applicationRoleId
+  let applicationRoleName
 
   const applicationRole1 = {
     name: "Viewer",
@@ -17,7 +17,7 @@ describe("Application Role API", () => {
     expect(res.statusCode).toEqual(201)
     expect(res.body.name).toBe(applicationRole1.name)
     expect(res.body.application).toBe(applicationRole1.application)
-    applicationRoleId = res.body.id // Store for later tests
+    applicationRoleName = res.body.name // Store for later tests
   })
 
   it("should get all Application Roles", async () => {
@@ -26,10 +26,10 @@ describe("Application Role API", () => {
     expect(res.body.length).toBeGreaterThan(0)
   })
 
-  it("should get a specific Application Role by ID", async () => {
-    const res = await request(app).get(`/api/applicationRoles/${applicationRoleId}`)
+  it("should get a specific Application Role by name", async () => {
+    const res = await request(app).get(`/api/applicationRoles/${applicationRoleName}`)
     expect(res.statusCode).toEqual(200)
-    expect(res.body.id).toBe(applicationRoleId)
+    expect(res.body.name).toBe(applicationRoleName)
   })
 
   const applicationRole2 = {
@@ -38,18 +38,18 @@ describe("Application Role API", () => {
   }
 
   it("should update a Application Role", async () => {
-    const res = await request(app).put(`/api/applicationRoles/${applicationRoleId}`).send(applicationRole2)
+    const res = await request(app).put(`/api/applicationRoles/${applicationRoleName}`).send(applicationRole2)
     expect(res.statusCode).toEqual(200)
     expect(res.body.name).toBe("Editor")
   })
 
   it("should delete a Application Role", async () => {
-    const res = await request(app).delete(`/api/applicationRoles/${applicationRoleId}`)
+    const res = await request(app).delete(`/api/applicationRoles/${applicationRole2.name}`)
     expect(res.statusCode).toEqual(204) // No content response
   })
 
   it("should return 404 for a deleted Application Role", async () => {
-    const res = await request(app).get(`/api/applicationRoles/${applicationRoleId}`)
+    const res = await request(app).get(`/api/applicationRoles/${applicationRole2.name}`)
     expect(res.statusCode).toEqual(404)
   })
 })

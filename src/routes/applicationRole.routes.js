@@ -2,16 +2,16 @@ const express = require("express")
 const router = express.Router()
 const {
   getApplicationRoles,
-  getApplicationRoleById,
+  getApplicationRoleByName,
   createApplicationRole,
   updateApplicationRole,
   deleteApplicationRole
 } = require("../controllers/applicationRole.controller")
 
 router.get("/", getApplicationRoles)
-router.get("/:id", getApplicationRoleById)
+router.get("/:name", getApplicationRoleByName)
 router.post("/", createApplicationRole)
-router.put("/:id", updateApplicationRole)
-router.delete("/:id", deleteApplicationRole)
+router.put("/:name", updateApplicationRole)
+router.delete("/:name", deleteApplicationRole)
 
 module.exports = router

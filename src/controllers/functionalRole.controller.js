@@ -15,7 +15,10 @@ exports.getFunctionalRoleByName = async (req, res) => {
     const role = await FunctionalRole.findOne({ name: req.params.name })
     if (!role) return res.status(404).json({ error: "Functional Role not found" })
 
-    res.json({ name: role.name })
+    res.json({
+      name: role.name,
+      application: role.application
+    })
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
@@ -25,7 +28,7 @@ exports.createFunctionalRole = async (req, res) => {
   try {
     const { name } = req.body
     const role = await FunctionalRole.create({ name })
-    res.status(201).json(role)
+    res.status(201).json( {name: role.name} )
   } catch (error) {
     res.status(500).json({ error: error.message })
   }
